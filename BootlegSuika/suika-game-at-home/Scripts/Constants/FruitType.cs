@@ -1,4 +1,4 @@
-public enum FruitHierarchy {
+public enum FruitType {
     CHERRY,
     STRAWBERRY,
     GRAPE,
