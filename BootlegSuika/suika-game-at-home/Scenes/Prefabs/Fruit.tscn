@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://jii08pf5n34n"]
+[gd_scene load_steps=3 format=3 uid="uid://jii08pf5n34n"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/Fruit.cs" id="1_70jlf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pvmoa"]
 
 [node name="Fruit" type="RigidBody2D"]
+script = ExtResource("1_70jlf")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 
