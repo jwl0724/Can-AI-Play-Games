@@ -8,7 +8,7 @@ public partial class GameLoop : Node
 
 	// Components
 	[Export] private FruitBuilder builder;
-	[Export] private Player player;
+	[Export] public Player Player { get; private set; }
 
 	// Events
 	[Signal] public delegate void ScoreChangeEventHandler(int score);
@@ -47,8 +47,8 @@ public partial class GameLoop : Node
 	// Spawn the fruit into player's hand
 	public void SpawnFruit()
 	{
-		Fruit fruit = builder.BuildFruit(NextFruit, player.GetFruitSpawnPoint());
-		player.GiveFruit(fruit);
+		Fruit fruit = builder.BuildFruit(NextFruit, Player.GetFruitSpawnPoint());
+		Player.GiveFruit(fruit);
 		ChooseNextFruit();
 	}
 
@@ -64,7 +64,8 @@ public partial class GameLoop : Node
 	// Resets the game to beginning state
 	private void ResetGame()
 	{
+		EmitSignal(SignalName.GameOver, Score);
+		EmitSignal(SignalName.ScoreChange, 0);
 		Score = 0;
-		EmitSignal(SignalName.ScoreChange, Score);
 	}
 }
