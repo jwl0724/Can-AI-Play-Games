@@ -1,5 +1,136 @@
-[gd_scene format=3 uid="uid://dvf60valdas0p"]
+[gd_scene load_steps=12 format=3 uid="uid://dvf60valdas0p"]
+
+[ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="1_d31xk"]
+[ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="1_sqc1b"]
+[ext_resource type="PackedScene" uid="uid://xx7htrj18hf4" path="res://Scenes/UI/Static/BoxVisuals.tscn" id="2_bnjeo"]
+[ext_resource type="PackedScene" uid="uid://c5fesbbfw3e43" path="res://Scenes/UI/Static/FruitOrder.tscn" id="2_t27h5"]
+[ext_resource type="Script" path="res://Scripts/Managers/SFXManager.cs" id="2_vfryr"]
+[ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="3_2mfsj"]
+[ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="4_mltmp"]
+[ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="7_mpm85"]
+[ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="8_3dpj2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iocy2"]
+size = Vector2(20, 500)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4d1w0"]
+size = Vector2(550, 20)
 
 [node name="Level" type="Node2D"]
 
 [node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Visuals" type="Node" parent="."]
+
+[node name="Background" type="TextureRect" parent="Visuals"]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sqc1b")
+
+[node name="BoxVisuals" parent="Visuals" instance=ExtResource("2_bnjeo")]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 51.0
+offset_right = -56.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI" type="Control" parent="Visuals"]
+z_index = -1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("2_t27h5")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -177.0
+offset_top = -173.0
+offset_right = -177.0
+offset_bottom = -173.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+
+[node name="NextFruit" parent="Visuals/UI" instance=ExtResource("3_2mfsj")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -177.0
+offset_top = 150.0
+offset_right = -177.0
+offset_bottom = 150.0
+grow_horizontal = 0
+grow_vertical = 1
+scale = Vector2(0.7, 0.7)
+
+[node name="ScoreBubble" parent="Visuals/UI" instance=ExtResource("4_mltmp")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 125.0
+offset_top = 125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.7, 0.7)
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="MainLoop" type="Node" parent="Managers" node_paths=PackedStringArray("Player")]
+script = ExtResource("1_d31xk")
+Player = NodePath("../../Player")
+
+[node name="SFXManager" type="AudioStreamPlayer" parent="Managers"]
+script = ExtResource("2_vfryr")
+
+[node name="BGM" type="AudioStreamPlayer" parent="Managers"]
+stream = ExtResource("7_mpm85")
+autoplay = true
+
+[node name="Player" parent="." instance=ExtResource("8_3dpj2")]
+z_index = 1
+position = Vector2(540, 56)
+
+[node name="BoxBoundaries" type="Node2D" parent="."]
+
+[node name="Left" type="StaticBody2D" parent="BoxBoundaries"]
+position = Vector2(257, 373)
+
+[node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Left"]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_iocy2")
+
+[node name="Right" type="StaticBody2D" parent="BoxBoundaries"]
+position = Vector2(807, 373)
+
+[node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Right"]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_iocy2")
+
+[node name="Ground" type="StaticBody2D" parent="BoxBoundaries"]
+position = Vector2(531, 615)
+
+[node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Ground"]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_4d1w0")
