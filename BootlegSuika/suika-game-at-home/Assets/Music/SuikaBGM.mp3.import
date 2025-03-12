@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/SuikaBGM.mp3-1fee415ac00fae124e5ce83c64fc92bc
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
