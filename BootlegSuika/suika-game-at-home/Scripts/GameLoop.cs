@@ -13,6 +13,8 @@ public partial class GameLoop : Node
 	// Events
 	[Signal] public delegate void ScoreChangeEventHandler(int score);
 	[Signal] public delegate void NextFruitPickedEventHandler(int fruitType); // Expected to typecast back to FruitType
+	[Signal] public delegate void GameOverEventHandler(int score);
+	[Signal] public delegate void PauseStateChangeEventHandler(bool paused);
 
 	// Running variables
 	public bool Paused { get; private set; } = false;
@@ -39,6 +41,7 @@ public partial class GameLoop : Node
 	public void PauseGame(bool pause)
 	{
 		Paused = pause;
+		EmitSignal(SignalName.PauseStateChange, pause);
 	}
 
 	// Spawn the fruit into player's hand
