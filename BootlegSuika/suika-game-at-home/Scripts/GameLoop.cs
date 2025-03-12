@@ -7,15 +7,17 @@ public partial class GameLoop : Node
 	public static GameLoop Instance { get; private set; }
 
 	// Components
-
+	[Export] private FruitBuilder builder;
+	[Export] private Player player;
 
 	// Events
 	[Signal] public delegate void ScoreChangeEventHandler(int score);
+	[Signal] public delegate void NextFruitPickedEventHandler(int fruitType); // Expected to typecast back to FruitType
 
 	// Running variables
 	public bool Paused { get; private set; } = false;
 	public int Score { get; private set; } = 0;
-	public Fruit NextFruit { get; private set; } = null;
+	public FruitType NextFruit { get; private set; }
 	public Fruit CurrentFruit { get; private set; } = null;
 
 	public override void _Ready()
@@ -39,10 +41,21 @@ public partial class GameLoop : Node
 		Paused = pause;
 	}
 
+	// Spawn the fruit into player's hand
+	public void SpawnFruit()
+	{
+		Fruit fruit = builder.BuildFruit(NextFruit, player.GetFruitSpawnPoint());
+		player.GiveFruit(fruit);
+		ChooseNextFruit();
+	}
+
 	// Randomly select the next fruit that will spawn (up to oranges)
 	private void ChooseNextFruit()
 	{
-
+		uint randomInt = GD.Randi() % 5;
+		FruitType randomType = (FruitType) randomInt; // Will typecast to corresponding fruit type
+		NextFruit = randomType;
+		EmitSignal(SignalName.NextFruitPicked, (int) NextFruit);
 	}
 
 	// Resets the game to beginning state
