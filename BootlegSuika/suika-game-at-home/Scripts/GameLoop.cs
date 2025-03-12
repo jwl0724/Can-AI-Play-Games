@@ -15,8 +15,8 @@ public partial class GameLoop : Node
 	// Running variables
 	public bool Paused { get; private set; } = false;
 	public int Score { get; private set; } = 0;
-	public FruitType NextFruit { get; private set; } = null;
-	public FruitType CurrentFruit { get; private set; } = null;
+	public Fruit NextFruit { get; private set; } = null;
+	public Fruit CurrentFruit { get; private set; } = null;
 
 	public override void _Ready()
 	{
@@ -31,10 +31,10 @@ public partial class GameLoop : Node
 	public void AddScore(int score)
 	{
 		Score += score;
-		EmitSignal(SignalName.ScoreChangeEventHandler, Score);
+		EmitSignal(SignalName.ScoreChange, Score);
 	}
 
-	public void PauseGame(pause)
+	public void PauseGame(bool pause)
 	{
 		Paused = pause;
 	}
@@ -49,6 +49,6 @@ public partial class GameLoop : Node
 	private void ResetGame()
 	{
 		Score = 0;
-		EmitSignal(SignalName.ScoreChangeEventHandler, Score);
+		EmitSignal(SignalName.ScoreChange, Score);
 	}
 }
