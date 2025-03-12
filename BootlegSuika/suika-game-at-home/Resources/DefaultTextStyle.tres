@@ -1,0 +1,13 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bln2mo7hpwouu"]
+
+[ext_resource type="FontFile" uid="uid://cfbdsqhrnmdli" path="res://Assets/Fonts/Bubbly Dream.ttf" id="1_d0fsu"]
+
+[resource]
+font = ExtResource("1_d0fsu")
+font_size = 48
+font_color = Color(0.984314, 0.988235, 0.972549, 1)
+outline_size = 12
+outline_color = Color(0.517647, 0.384314, 0.145098, 1)
+shadow_size = 8
+shadow_color = Color(0.776471, 0.67451, 0.396078, 0)
+shadow_offset = Vector2(2, 2)
