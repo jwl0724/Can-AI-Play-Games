@@ -1,0 +1,153 @@
+[gd_scene load_steps=14 format=3 uid="uid://c5fesbbfw3e43"]
+
+[ext_resource type="Texture2D" uid="uid://cvyl34am2wwkh" path="res://Assets/Images/Arrow.png" id="1_f3ck0"]
+[ext_resource type="Texture2D" uid="uid://bermajcu0l0hj" path="res://Assets/Sprites/Cherry.png" id="2_1466m"]
+[ext_resource type="LabelSettings" uid="uid://bln2mo7hpwouu" path="res://Resources/DefaultTextStyle.tres" id="2_lsnat"]
+[ext_resource type="Texture2D" uid="uid://dfhc8yv7kfjw6" path="res://Assets/Sprites/Strawberry.png" id="3_d27vl"]
+[ext_resource type="Texture2D" uid="uid://b8sali6qpoipd" path="res://Assets/Sprites/Grape.png" id="4_8rmjh"]
+[ext_resource type="Texture2D" uid="uid://dv8qu7lq7wrn" path="res://Assets/Sprites/Dekopon.png" id="5_t4dlw"]
+[ext_resource type="Texture2D" uid="uid://bkrmtfd2vh8cd" path="res://Assets/Sprites/Orange.png" id="6_0u856"]
+[ext_resource type="Texture2D" uid="uid://ciu1mrl175ghg" path="res://Assets/Sprites/Apple.png" id="7_hyftk"]
+[ext_resource type="Texture2D" uid="uid://bo13c8n7we20a" path="res://Assets/Sprites/Pear.png" id="8_rolok"]
+[ext_resource type="Texture2D" uid="uid://bqsi5p3v3mcqy" path="res://Assets/Sprites/Peach.png" id="9_yb4jl"]
+[ext_resource type="Texture2D" uid="uid://mbuacan350ui" path="res://Assets/Sprites/Pineapple.png" id="10_e1rae"]
+[ext_resource type="Texture2D" uid="uid://d3l0kxp81sivu" path="res://Assets/Sprites/Melon.png" id="11_oct4y"]
+[ext_resource type="Texture2D" uid="uid://brmjrw6mb2ak7" path="res://Assets/Sprites/Watermelon.png" id="12_ifnix"]
+
+[node name="FruitOrder" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(0.85, 0.85)
+
+[node name="ArrowOutline" type="TextureRect" parent="."]
+modulate = Color(0.960784, 0.952941, 0.74902, 1)
+layout_mode = 0
+offset_left = -306.0
+offset_top = -204.0
+offset_right = 306.0
+offset_bottom = 204.0
+texture = ExtResource("1_f3ck0")
+flip_h = true
+
+[node name="Arrow" type="TextureRect" parent="."]
+modulate = Color(0.933333, 0.988235, 0.478431, 1)
+layout_mode = 0
+offset_left = -306.0
+offset_top = -204.0
+offset_right = 306.0
+offset_bottom = 204.0
+scale = Vector2(0.98, 0.98)
+texture = ExtResource("1_f3ck0")
+flip_h = true
+
+[node name="Fruits" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Cherry" type="TextureRect" parent="Fruits"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = -170.588
+offset_right = 163.0
+offset_bottom = -42.5882
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_1466m")
+
+[node name="Strawberry" type="TextureRect" parent="Fruits"]
+layout_mode = 0
+offset_left = 104.706
+offset_top = -111.765
+offset_right = 224.706
+offset_bottom = 19.2353
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_d27vl")
+
+[node name="Grape" type="TextureRect" parent="Fruits"]
+offset_left = 121.176
+offset_top = -35.2941
+offset_right = 243.176
+offset_bottom = 92.7059
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_8rmjh")
+
+[node name="Dekopon" type="TextureRect" parent="Fruits"]
+offset_left = 102.353
+offset_top = 43.5294
+offset_right = 213.353
+offset_bottom = 163.529
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_t4dlw")
+
+[node name="Orange" type="TextureRect" parent="Fruits"]
+offset_left = 48.2353
+offset_top = 92.9412
+offset_right = 170.235
+offset_bottom = 221.941
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_0u856")
+
+[node name="Apple" type="TextureRect" parent="Fruits"]
+offset_left = -31.7647
+offset_top = 118.824
+offset_right = 96.2353
+offset_bottom = 248.824
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_hyftk")
+
+[node name="Pear" type="TextureRect" parent="Fruits"]
+offset_left = -109.412
+offset_top = 97.6471
+offset_right = 14.5882
+offset_bottom = 229.647
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_rolok")
+
+[node name="Peach" type="TextureRect" parent="Fruits"]
+offset_left = -164.706
+offset_top = 50.5882
+offset_right = -33.7059
+offset_bottom = 181.588
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_yb4jl")
+
+[node name="Pineapple" type="TextureRect" parent="Fruits"]
+offset_left = -188.235
+offset_top = -18.8235
+offset_right = -78.2353
+offset_bottom = 110.176
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_e1rae")
+
+[node name="Melon" type="TextureRect" parent="Fruits"]
+offset_left = -183.529
+offset_top = -88.2353
+offset_right = -57.5294
+offset_bottom = 38.7647
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_oct4y")
+
+[node name="Watermelon" type="TextureRect" parent="Fruits"]
+offset_left = -137.647
+offset_top = -155.294
+offset_right = -8.64706
+offset_bottom = -24.2941
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("12_ifnix")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -171.5
+offset_top = -200.0
+offset_right = 171.5
+offset_bottom = -153.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Circle of Evolution"
+label_settings = ExtResource("2_lsnat")
+horizontal_alignment = 1

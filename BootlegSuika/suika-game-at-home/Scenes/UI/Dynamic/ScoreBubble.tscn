@@ -1,0 +1,100 @@
+[gd_scene load_steps=7 format=3 uid="uid://dxuahuijf6ioh"]
+
+[ext_resource type="Script" path="res://Scripts/UI/ScoreUI.cs" id="1_q871u"]
+[ext_resource type="Texture2D" uid="uid://dhh5pxqh57prw" path="res://Assets/Images/Bubble.png" id="2_g0ogc"]
+[ext_resource type="LabelSettings" uid="uid://bln2mo7hpwouu" path="res://Resources/DefaultTextStyle.tres" id="3_bkw62"]
+[ext_resource type="FontFile" uid="uid://cfbdsqhrnmdli" path="res://Assets/Fonts/Bubbly Dream.ttf" id="4_lue40"]
+[ext_resource type="Script" path="res://Scripts/UI/Helpers/FloatEffect.cs" id="5_l03dg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ifuos"]
+font = ExtResource("4_lue40")
+font_size = 40
+font_color = Color(0.964706, 0.788235, 0.564706, 1)
+outline_size = 4
+outline_color = Color(0.690196, 0.592157, 0.372549, 1)
+shadow_size = 2
+shadow_color = Color(0.776471, 0.67451, 0.396078, 1)
+shadow_offset = Vector2(2, 2)
+
+[node name="ScoreBubble" type="Control" node_paths=PackedStringArray("currentScoreLabel", "bestScoreLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q871u")
+currentScoreLabel = NodePath("Background/Score")
+bestScoreLabel = NodePath("Background/BestScore")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -137.0
+offset_top = -137.0
+offset_right = 137.0
+offset_bottom = 137.0
+texture = ExtResource("2_g0ogc")
+
+[node name="Score" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.5
+offset_top = -57.0
+offset_right = 45.5
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "10000"
+label_settings = ExtResource("3_bkw62")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.5
+offset_top = 3.0
+offset_right = 68.5
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Best Run"
+label_settings = SubResource("LabelSettings_ifuos")
+
+[node name="BestScore" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = 53.0
+offset_right = 38.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "10000"
+label_settings = SubResource("LabelSettings_ifuos")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -45.5
+offset_top = -150.0
+offset_right = 45.5
+offset_bottom = -103.0
+text = "Score"
+label_settings = ExtResource("3_bkw62")
+
+[node name="FloatEffect" type="Node" parent="."]
+script = ExtResource("5_l03dg")
+offsetAmount = 25.0
+speed = 1.75

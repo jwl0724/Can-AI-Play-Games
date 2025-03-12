@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://0sulm4mw1w5u"]
+
+[ext_resource type="Script" path="res://Scripts/UI/NextFruitUI.cs" id="1_wnwhl"]
+[ext_resource type="Texture2D" uid="uid://dhh5pxqh57prw" path="res://Assets/Images/Bubble.png" id="2_vxvgn"]
+[ext_resource type="Texture2D" uid="uid://bermajcu0l0hj" path="res://Assets/Sprites/Cherry.png" id="3_mhu0s"]
+[ext_resource type="LabelSettings" uid="uid://bln2mo7hpwouu" path="res://Resources/DefaultTextStyle.tres" id="4_enk5l"]
+[ext_resource type="Script" path="res://Scripts/UI/Helpers/FloatEffect.cs" id="5_nmh1n"]
+
+[node name="NextFruit" type="Control" node_paths=PackedStringArray("imageTexture")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wnwhl")
+imageTexture = NodePath("Background/Fruit")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -137.0
+offset_top = -137.0
+offset_right = 137.0
+offset_bottom = 137.0
+texture = ExtResource("2_vxvgn")
+
+[node name="Fruit" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.0
+offset_top = -64.5
+offset_right = 61.0
+offset_bottom = 64.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_mhu0s")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -45.5
+offset_top = -150.0
+offset_right = 45.5
+offset_bottom = -103.0
+text = "Next"
+label_settings = ExtResource("4_enk5l")
+
+[node name="FloatEffect" type="Node" parent="."]
+script = ExtResource("5_nmh1n")
+offsetAmount = 15.0
+speed = 2.0
