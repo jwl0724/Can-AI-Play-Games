@@ -1,3 +1,5 @@
 [gd_scene format=3 uid="uid://dvf60valdas0p"]
 
 [node name="Level" type="Node2D"]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
