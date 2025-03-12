@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7hdyyypm45dr"]
+[gd_scene load_steps=4 format=3 uid="uid://c7hdyyypm45dr"]
 
 [ext_resource type="Texture2D" uid="uid://c44irb6tn0fse" path="res://Assets/Sprites/Player.png" id="1_hwaq6"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player.cs" id="1_xdv36"]
+[ext_resource type="Script" path="res://Scripts/Managers/InputManager.cs" id="3_nemtl"]
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_xdv36")
@@ -12,3 +13,6 @@ texture = ExtResource("1_hwaq6")
 
 [node name="FruitPosition" type="Node2D" parent="."]
 position = Vector2(-55, 30)
+
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("3_nemtl")

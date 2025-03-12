@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dvf60valdas0p"]
+[gd_scene load_steps=15 format=3 uid="uid://dvf60valdas0p"]
 
 [ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="1_d31xk"]
 [ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="1_sqc1b"]
@@ -7,8 +7,11 @@
 [ext_resource type="Script" path="res://Scripts/Managers/SFXManager.cs" id="2_vfryr"]
 [ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="3_2mfsj"]
 [ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="4_mltmp"]
+[ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="7_h2je7"]
 [ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="7_mpm85"]
 [ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="8_3dpj2"]
+[ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="8_hbkey"]
+[ext_resource type="Script" path="res://Scenes/Levels/Box.cs" id="11_spe3k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iocy2"]
 size = Vector2(20, 500)
@@ -97,20 +100,22 @@ scale = Vector2(0.7, 0.7)
 
 [node name="Managers" type="Node" parent="."]
 
-[node name="MainLoop" type="Node" parent="Managers" node_paths=PackedStringArray("Player")]
+[node name="MainLoop" type="Node" parent="Managers"]
 script = ExtResource("1_d31xk")
-Player = NodePath("../../Player")
+
+[node name="FruitBuilder" type="Node" parent="Managers"]
+script = ExtResource("7_h2je7")
+fruitScene = ExtResource("8_hbkey")
 
 [node name="SFXManager" type="AudioStreamPlayer" parent="Managers"]
 script = ExtResource("2_vfryr")
 
-[node name="BGM" type="AudioStreamPlayer" parent="Managers"]
-stream = ExtResource("7_mpm85")
-autoplay = true
-
 [node name="Player" parent="." instance=ExtResource("8_3dpj2")]
 z_index = 1
 position = Vector2(540, 56)
+
+[node name="Box" type="Node" parent="."]
+script = ExtResource("11_spe3k")
 
 [node name="BoxBoundaries" type="Node2D" parent="."]
 
@@ -134,3 +139,7 @@ position = Vector2(531, 615)
 [node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Ground"]
 position = Vector2(-2, 0)
 shape = SubResource("RectangleShape2D_4d1w0")
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_mpm85")
+autoplay = true
