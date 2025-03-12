@@ -6,6 +6,9 @@ public partial class Player : Node2D
     // Components
     private Node2D fruitPosition;
 
+    // Signals
+    [Signal] public delegate void DropFruitEventHandler();
+
     // Running variables
     private Fruit heldFruit = null;
 
