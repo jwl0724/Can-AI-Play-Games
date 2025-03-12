@@ -17,7 +17,15 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameLoop="*res://Scripts/GameLoop.cs"
+Images="*res://Scripts/Constants/Images.cs"
 
 [dotnet]
 
 project/assembly_name="Suika Game at Home"
+
+[input]
+
+Drop={
+"deadzone": 0.5,
+"events": []
+}
