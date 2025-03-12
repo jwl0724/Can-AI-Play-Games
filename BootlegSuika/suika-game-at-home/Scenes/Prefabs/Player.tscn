@@ -1,3 +1,11 @@
-[gd_scene format=3 uid="uid://c7hdyyypm45dr"]
+[gd_scene load_steps=2 format=3 uid="uid://c7hdyyypm45dr"]
+
+[ext_resource type="Texture2D" uid="uid://c44irb6tn0fse" path="res://Assets/Sprites/Player.png" id="1_hwaq6"]
 
 [node name="Player" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_hwaq6")
+
+[node name="FruitPosition" type="Node2D" parent="."]
+position = Vector2(-99, 49)
