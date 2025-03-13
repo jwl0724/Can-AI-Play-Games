@@ -17,7 +17,6 @@ public partial class FruitBuilder : Node
 		int score = 0;
 		float radius = 10f;
 		CompressedTexture2D spriteTexture = null;
-		// TODO: Modify the hitbox sizes to match closer to game sizes
 		switch(type)
 		{
 			case FruitType.CHERRY:
