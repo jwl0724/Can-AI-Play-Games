@@ -4,7 +4,7 @@ using System;
 public partial class FruitBuilder : Node
 {
 	[Export] private PackedScene fruitScene;
-	private static readonly float radiusLevelFactor = 1.5f;
+	private static readonly float radiusLevelFactor = 10;
 
 	public override void _Ready()
 	{
@@ -15,7 +15,7 @@ public partial class FruitBuilder : Node
 	public Fruit BuildFruit(FruitType type, Vector2 position, bool fromFusion)
 	{
 		int score = 0;
-		float radius = 5f;
+		float radius = 10f;
 		CompressedTexture2D spriteTexture = null;
 		// TODO: Modify the hitbox sizes to match closer to game sizes
 		switch(type)
@@ -68,7 +68,7 @@ public partial class FruitBuilder : Node
 				GD.PushError($"Invalid fruit type inputted: {type}");
 				break;
 		}
-		return InstantiateFruit(type, spriteTexture, position, score, radius * ((int) type + 1) * radiusLevelFactor, fromFusion);
+		return InstantiateFruit(type, spriteTexture, position, score, radius + ((int) type + 1) * radiusLevelFactor, fromFusion);
 	}
 
 	private Fruit InstantiateFruit(FruitType type, CompressedTexture2D sprite, Vector2 position, int score, float radius, bool fromFusion)
@@ -79,11 +79,7 @@ public partial class FruitBuilder : Node
 		fruit.Position = position;
 
 		// Don't pause physics if spawned from a fusion
-		if (fromFusion)
-		{
-			fruit.Sleeping = false;
-			fruit.Freeze = false;
-		}
+		if (fromFusion) fruit.Activate();
 		return fruit;
 	}
 }
