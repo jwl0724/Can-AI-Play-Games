@@ -12,11 +12,12 @@ public partial class FruitBuilder : Node
 	}
 
 	// Returns a reference to the instantiated fruit on the scene
-	public Fruit BuildFruit(FruitType type, Vector2 position)
+	public Fruit BuildFruit(FruitType type, Vector2 position, bool fromFusion)
 	{
 		int score = 0;
 		float radius = 5f;
 		CompressedTexture2D spriteTexture = null;
+		// TODO: Modify the hitbox sizes to match closer to game sizes
 		switch(type)
 		{
 			case FruitType.CHERRY:
@@ -67,15 +68,22 @@ public partial class FruitBuilder : Node
 				GD.PushError($"Invalid fruit type inputted: {type}");
 				break;
 		}
-		return InstantiateFruit(type, spriteTexture, position, score, radius * ((int) type + 1) * radiusLevelFactor);
+		return InstantiateFruit(type, spriteTexture, position, score, radius * ((int) type + 1) * radiusLevelFactor, fromFusion);
 	}
 
-	private Fruit InstantiateFruit(FruitType type, CompressedTexture2D sprite, Vector2 position, int score, float radius)
+	private Fruit InstantiateFruit(FruitType type, CompressedTexture2D sprite, Vector2 position, int score, float radius, bool fromFusion)
 	{
 		Fruit fruit = fruitScene.Instantiate<Fruit>();
 		GameLoop.Instance.FruitContainer.AddChild(fruit);
-		fruit.SetAttributes(this, type, sprite, score, radius);
+		fruit.SetAttributes(this, type, sprite, score, radius, fromFusion);
 		fruit.Position = position;
+
+		// Don't pause physics if spawned from a fusion
+		if (fromFusion)
+		{
+			fruit.Sleeping = false;
+			fruit.Freeze = false;
+		}
 		return fruit;
 	}
 }
