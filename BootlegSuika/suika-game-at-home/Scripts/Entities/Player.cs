@@ -12,6 +12,7 @@ public partial class Player : Node2D
 
     // Running variables
     [Export] public float Speed { get; private set; } = 200;
+    public bool IsHoldingFruit { get; private set; } = false;
 
     // Signals
     [Signal] public delegate void DropFruitEventHandler();
@@ -47,15 +48,15 @@ public partial class Player : Node2D
     public void DropHeldFruit()
     {
         if (heldFruit == null) return;
-
-        heldFruit.Sleeping = false;
-        heldFruit.Freeze = false;
+        heldFruit.Activate();
         heldFruit = null;
+        IsHoldingFruit = false;
         EmitSignal(SignalName.DropFruit);
     }
 
     public void GiveFruit(Fruit fruit)
     {
+        IsHoldingFruit = true;
         heldFruit = fruit;
     }
 
