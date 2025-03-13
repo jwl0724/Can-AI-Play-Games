@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6gajoa5flv26"]
+
+[ext_resource type="Script" path="res://Scripts/Managers/SFXManager.cs" id="1_i6qrj"]
+[ext_resource type="AudioStream" uid="uid://bone0cmfoebl" path="res://Assets/SFX/Drop.mp3" id="1_u1bo2"]
+[ext_resource type="AudioStream" uid="uid://pesa4n72j3c" path="res://Assets/SFX/Fuse.mp3" id="2_rgj00"]
+
+[node name="SFXManager" type="Node"]
+script = ExtResource("1_i6qrj")
+
+[node name="Drop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_u1bo2")
+
+[node name="Fuse" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_rgj00")
