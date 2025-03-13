@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://0sulm4mw1w5u"]
+[gd_scene load_steps=5 format=3 uid="uid://0sulm4mw1w5u"]
 
 [ext_resource type="Script" path="res://Scripts/UI/NextFruitUI.cs" id="1_wnwhl"]
 [ext_resource type="Texture2D" uid="uid://dhh5pxqh57prw" path="res://Assets/Images/Bubble.png" id="2_vxvgn"]
-[ext_resource type="Texture2D" uid="uid://bermajcu0l0hj" path="res://Assets/Sprites/Cherry.png" id="3_mhu0s"]
 [ext_resource type="LabelSettings" uid="uid://bln2mo7hpwouu" path="res://Resources/DefaultTextStyle.tres" id="4_enk5l"]
 [ext_resource type="Script" path="res://Scripts/UI/Helpers/FloatEffect.cs" id="5_nmh1n"]
 
@@ -37,7 +36,6 @@ offset_right = 61.0
 offset_bottom = 64.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_mhu0s")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0

@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="7_mpm85"]
 [ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="8_3dpj2"]
 [ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="8_hbkey"]
-[ext_resource type="Script" path="res://Scenes/Levels/Box.cs" id="11_spe3k"]
+[ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="11_spe3k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iocy2"]
 size = Vector2(20, 500)
@@ -22,6 +22,9 @@ size = Vector2(550, 20)
 [node name="Level" type="Node2D"]
 
 [node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Box" type="Node" parent="."]
+script = ExtResource("11_spe3k")
 
 [node name="Visuals" type="Node" parent="."]
 
@@ -35,7 +38,6 @@ grow_vertical = 2
 texture = ExtResource("1_sqc1b")
 
 [node name="BoxVisuals" parent="Visuals" instance=ExtResource("2_bnjeo")]
-z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -113,9 +115,6 @@ script = ExtResource("2_vfryr")
 [node name="Player" parent="." instance=ExtResource("8_3dpj2")]
 z_index = 1
 position = Vector2(540, 56)
-
-[node name="Box" type="Node" parent="."]
-script = ExtResource("11_spe3k")
 
 [node name="BoxBoundaries" type="Node2D" parent="."]
 
