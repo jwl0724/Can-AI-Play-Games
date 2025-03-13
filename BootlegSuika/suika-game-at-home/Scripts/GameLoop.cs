@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+// TODO: Add a lose condition and an appropriate menu for it + retry button
 public partial class GameLoop : Node
 {
 	// Singleton
@@ -27,7 +28,8 @@ public partial class GameLoop : Node
 
 	public override void _Ready()
 	{
-		Instance = this;
+		Instance ??= this;
+
 		// TODO: OH GOD FIND A WAY TO WAIT FOR EVERYTHING TO LOAD, THIS IS GENUINELY AWFUL
 		Connect(SignalName.ComponentConnected, Callable.From((Node component) => {
 			if (Player != null && FruitContainer != null && Builder != null) StartGame();
@@ -57,7 +59,10 @@ public partial class GameLoop : Node
 	// Spawn the fruit into player's hand
 	public void SpawnFruit()
 	{
-		Fruit fruit = Builder.BuildFruit(NextFruit, Player.GetFruitSpawnPoint());
+		Fruit fruit = Builder.BuildFruit(NextFruit, Player.GetFruitSpawnPoint(), false);
+		CurrentFruit = fruit;
+		CurrentFruit.Connect(Fruit.SignalName.FirstCollision, new Callable(this, nameof(SpawnFruit)));
+
 		Player.GiveFruit(fruit);
 		ChooseNextFruit();
 	}
