@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-// TODO: Add a lose condition and an appropriate menu for it + retry button
+// TODO: Add menu for it + retry button for game over
 public partial class GameLoop : Node
 {
 	// Singleton
@@ -20,8 +20,9 @@ public partial class GameLoop : Node
 	[Signal] public delegate void ComponentConnectedEventHandler(Node component);
 
 	// Running variables
-	[Export] public Vector2 BoxBorders { get; private set; }
+	public Vector2 BoxBorders { get; private set; } = new Vector2(265, 795);
 	public bool Paused { get; private set; } = false;
+	public bool Playing { get; private set; } = false;
 	public int Score { get; private set; } = 0;
 	public FruitType NextFruit { get; private set; }
 	public Fruit CurrentFruit { get; private set; } = null;
@@ -78,16 +79,24 @@ public partial class GameLoop : Node
 		EmitSignal(SignalName.NextFruitPicked, (int) NextFruit);
 	}
 
-	// Resets the game to beginning state
-	private void ResetGame()
+	public void EndGame()
 	{
 		EmitSignal(SignalName.GameOver, Score);
+		Playing = false;
+	}
+
+	// Resets the game to beginning state
+	public void ResetGame()
+	{
 		EmitSignal(SignalName.ScoreChange, 0);
+		FruitContainer.Reset();
 		Score = 0;
+		CallDeferred(nameof(StartGame));
 	}
 
 	private void StartGame()
 	{
+		Playing = true;
 		Player.Reset();
 		CurrentFruit = null;
 		ChooseNextFruit();

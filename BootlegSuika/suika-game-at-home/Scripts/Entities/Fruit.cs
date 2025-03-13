@@ -14,6 +14,8 @@ public partial class Fruit : RigidBody2D
 	// Running variables
 	public FruitType Type { get; private set; }
 	public bool Collided { get; private set; } = false;
+	public float Radius { get; private set; }
+	public bool InBounds = true;
 	private int scoreAmount;
 
 	public override void _Ready()
@@ -58,6 +60,7 @@ public partial class Fruit : RigidBody2D
 		Type = type;
 		this.builder = builder;
 		this.scoreAmount = scoreAmount;
+		Radius = radius;
 
 		// Set in-game properties
 		this.sprite.Texture = sprite;
@@ -91,7 +94,9 @@ public partial class Fruit : RigidBody2D
 
 	private bool Fuse(Fruit otherFruit)
 	{
-		if (Type != otherFruit.Type || Type == FruitType.WATERMELON || IsQueuedForDeletion()) return false;
+		if (Type != otherFruit.Type || Type == FruitType.WATERMELON || IsQueuedForDeletion() || !GameLoop.Instance.Playing)
+			return false;
+
 		// Spawn new fruit between the two fruits
 		Vector2 middlePoint = (Position + otherFruit.Position) / 2;
 		builder.BuildFruit(Type + 1, middlePoint, true);

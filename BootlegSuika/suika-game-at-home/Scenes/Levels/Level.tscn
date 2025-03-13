@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvf60valdas0p"]
+[gd_scene load_steps=17 format=3 uid="uid://dvf60valdas0p"]
 
 [ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="1_d31xk"]
 [ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="1_sqc1b"]
@@ -12,12 +12,16 @@
 [ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="8_hbkey"]
 [ext_resource type="PackedScene" uid="uid://c6gajoa5flv26" path="res://Scenes/Managers/SFXManager.tscn" id="10_6c6uh"]
 [ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="11_spe3k"]
+[ext_resource type="Script" path="res://Scripts/Managers/LosePlaneManager.cs" id="12_l5r1n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iocy2"]
 size = Vector2(20, 500)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4d1w0"]
 size = Vector2(550, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vx74o"]
+size = Vector2(400, 500)
 
 [node name="Level" type="Node2D"]
 
@@ -137,6 +141,23 @@ position = Vector2(531, 615)
 [node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Ground"]
 position = Vector2(-2, 0)
 shape = SubResource("RectangleShape2D_4d1w0")
+
+[node name="LosePlane" type="Node2D" parent="."]
+script = ExtResource("12_l5r1n")
+
+[node name="Left" type="Area2D" parent="LosePlane"]
+position = Vector2(45, 398)
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="LosePlane/Left"]
+shape = SubResource("RectangleShape2D_vx74o")
+
+[node name="Right" type="Area2D" parent="LosePlane"]
+position = Vector2(1016, 398)
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="LosePlane/Right"]
+shape = SubResource("RectangleShape2D_vx74o")
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_mpm85")
