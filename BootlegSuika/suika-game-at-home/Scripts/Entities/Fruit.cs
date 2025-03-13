@@ -32,7 +32,6 @@ public partial class Fruit : RigidBody2D
 		MaxContactsReported = 8;
 	}
 
-	// TODO: Fix bug where fruits still interactable when player is holding it
     public override void _PhysicsProcess(double delta)
     {
 		if (IsQueuedForDeletion()) return; // In case another fruit called queue free for the fruit
@@ -63,7 +62,11 @@ public partial class Fruit : RigidBody2D
 		CircleShape2D circleShape = body.Shape as CircleShape2D;
 		circleShape.Radius = radius;
 		Collided = collided;
+
+		// Adjust mass
 		Mass = 1f + 0.5f * (int) Type;
+		CenterOfMassMode = CenterOfMassModeEnum.Custom;
+		CenterOfMass = new Vector2((float) GD.RandRange(-0.01, 0.01), 0); // Offset center of mass slightly
 
 		// Scale sprite to size of collision shape
 		float scaleFactor = radius * 2 / Math.Max(sprite.GetSize().X, sprite.GetSize().Y) + 0.1f; // Add extra to account for image gap
