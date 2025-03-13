@@ -59,6 +59,8 @@ public partial class GameLoop : Node
 	// Spawn the fruit into player's hand
 	public void SpawnFruit()
 	{
+		if (Player.IsHoldingFruit) return;
+
 		Fruit fruit = Builder.BuildFruit(NextFruit, Player.GetFruitSpawnPoint(), false);
 		CurrentFruit = fruit;
 		CurrentFruit.Connect(Fruit.SignalName.FirstCollision, new Callable(this, nameof(SpawnFruit)));
