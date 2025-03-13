@@ -51,7 +51,6 @@ public partial class Fruit : RigidBody2D
 		}
     }
 
-	// TODO: Adjust weight of the fruit based on the size of the fruit
     public void SetAttributes(FruitBuilder builder, FruitType type, CompressedTexture2D sprite, int scoreAmount, float radius, bool collided)
 	{
 		// Set variables
@@ -64,6 +63,7 @@ public partial class Fruit : RigidBody2D
 		CircleShape2D circleShape = body.Shape as CircleShape2D;
 		circleShape.Radius = radius;
 		Collided = collided;
+		Mass = 1f + 0.5f * (int) Type;
 
 		// Scale sprite to size of collision shape
 		float scaleFactor = radius * 2 / Math.Max(sprite.GetSize().X, sprite.GetSize().Y) + 0.1f; // Add extra to account for image gap
