@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+// TODO: Add a line between fruit position and the closest fruit down
 public partial class Player : Node2D
 {
     // Constants
@@ -28,7 +29,7 @@ public partial class Player : Node2D
 
     public override void _Process(double delta)
     {
-        if (heldFruit != null) heldFruit.GlobalPosition = fruitPosition.GlobalPosition;
+        if (heldFruit != null) heldFruit.Position = fruitPosition.GlobalPosition;
     }
 
     public void Reset()
@@ -39,11 +40,17 @@ public partial class Player : Node2D
 
     public void Move(float direction, double delta)
     {
+        // TODO: Add box boundaries such that the fruit held can never go outside of the box
         Position += Vector2.Right * direction * Speed * (float) delta;
     }
 
     public void DropHeldFruit()
     {
+        if (heldFruit == null) return;
+
+        heldFruit.Sleeping = false;
+        heldFruit.Freeze = false;
+        heldFruit = null;
         EmitSignal(SignalName.DropFruit);
     }
 
