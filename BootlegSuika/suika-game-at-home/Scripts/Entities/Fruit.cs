@@ -18,8 +18,12 @@ public partial class Fruit : RigidBody2D
 
 	public override void _Ready()
 	{
+		// Disable physics on first spawn
 		Sleeping = true;
 		Freeze = true;
+		SetCollisionLayerValue(1, false);
+		SetCollisionMaskValue(1, false);
+
 		body = GetNode<CollisionShape2D>("Body");
 		sprite = GetNode<Sprite2D>("Sprite");
 
@@ -28,6 +32,7 @@ public partial class Fruit : RigidBody2D
 		MaxContactsReported = 8;
 	}
 
+	// TODO: Fix bug where fruits still interactable when player is holding it
     public override void _PhysicsProcess(double delta)
     {
 		if (IsQueuedForDeletion()) return; // In case another fruit called queue free for the fruit
@@ -41,7 +46,7 @@ public partial class Fruit : RigidBody2D
 		// Handle fruit fusion
 		foreach(Node2D body in GetCollidingBodies())
 		{
-			if (body is not Fruit fruit) continue;
+			if (body is not Fruit fruit || fruit.IsQueuedForDeletion()) continue;
 			if (Fuse(fruit)) break;
 		}
     }
@@ -61,8 +66,22 @@ public partial class Fruit : RigidBody2D
 		Collided = collided;
 
 		// Scale sprite to size of collision shape
-		float scaleFactor = radius * 2 / Math.Max(sprite.GetSize().X, sprite.GetSize().Y);
+		float scaleFactor = radius * 2 / Math.Max(sprite.GetSize().X, sprite.GetSize().Y) + 0.1f; // Add extra to account for image gap
+		if (Type == FruitType.PINEAPPLE)
+		{
+			// Pineapple sprite completely off from the other sprites, need to account for it
+		 	this.sprite.Position += Vector2.Up * 15;
+			scaleFactor += 0.15f;
+		}
 		this.sprite.Scale = Vector2.One * scaleFactor;
+	}
+
+	public void Activate()
+	{
+		Freeze = false;
+		Sleeping = false;
+		SetCollisionLayerValue(1, true);
+		SetCollisionMaskValue(1, true);
 	}
 
 	private bool Fuse(Fruit otherFruit)
