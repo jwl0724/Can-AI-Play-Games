@@ -1,10 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://jii08pf5n34n"]
+[gd_scene load_steps=4 format=3 uid="uid://jii08pf5n34n"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Fruit.cs" id="1_70jlf"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8trko"]
+friction = 0.1
+bounce = 0.1
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_pvmoa"]
+resource_local_to_scene = true
 
 [node name="Fruit" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_8trko")
+contact_monitor = true
+max_contacts_reported = 8
 script = ExtResource("1_70jlf")
 
 [node name="Sprite" type="Sprite2D" parent="."]
