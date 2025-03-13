@@ -22,3 +22,5 @@ script = ExtResource("1_70jlf")
 
 [node name="Body" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pvmoa")
+
+[node name="Visibility" type="VisibleOnScreenNotifier2D" parent="."]

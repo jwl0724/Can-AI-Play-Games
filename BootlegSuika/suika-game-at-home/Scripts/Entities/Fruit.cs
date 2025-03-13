@@ -26,6 +26,8 @@ public partial class Fruit : RigidBody2D
 
 		body = GetNode<CollisionShape2D>("Body");
 		sprite = GetNode<Sprite2D>("Sprite");
+		GetNode<VisibleOnScreenNotifier2D>("Visibility")
+			.Connect(VisibleOnScreenNotifier2D.SignalName.ScreenExited, new Callable(this, nameof(QueueFree)));
 
 		// Allow collision reporting
 		ContactMonitor = true;
