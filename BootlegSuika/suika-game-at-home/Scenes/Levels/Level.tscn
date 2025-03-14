@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://dvf60valdas0p"]
+[gd_scene load_steps=18 format=3 uid="uid://dvf60valdas0p"]
 
 [ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="1_d31xk"]
 [ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="1_sqc1b"]
 [ext_resource type="PackedScene" uid="uid://xx7htrj18hf4" path="res://Scenes/UI/Static/BoxVisuals.tscn" id="2_bnjeo"]
 [ext_resource type="PackedScene" uid="uid://c5fesbbfw3e43" path="res://Scenes/UI/Static/FruitOrder.tscn" id="2_t27h5"]
 [ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="3_2mfsj"]
+[ext_resource type="PackedScene" uid="uid://clch51u5vbqop" path="res://Scenes/UI/Dynamic/GameOverMenu.tscn" id="4_4hmhp"]
 [ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="4_mltmp"]
 [ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="7_h2je7"]
 [ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="7_mpm85"]
@@ -62,6 +63,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameOverMenu" parent="Visuals/UI" instance=ExtResource("4_4hmhp")]
+z_index = 1
+layout_mode = 1
 
 [node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("2_t27h5")]
 layout_mode = 1
