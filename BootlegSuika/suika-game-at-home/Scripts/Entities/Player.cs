@@ -40,6 +40,7 @@ public partial class Player : Node2D
     {
         stop = false;
         heldFruit = null;
+        IsHoldingFruit = false;
         Position = startPosition;
     }
 
