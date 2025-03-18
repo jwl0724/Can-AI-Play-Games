@@ -18,6 +18,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameLoop="*res://Scripts/GameLoop.cs"
+Params="*res://Addons/Neat/NEAT_code/params.gd"
+Utils="*res://Addons/Neat/NEAT_code/utils.gd"
+Innovations="*res://Addons/Neat/NEAT_code/innovations.gd"
 
 [display]
 
