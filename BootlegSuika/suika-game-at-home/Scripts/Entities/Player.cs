@@ -19,7 +19,7 @@ public partial class Player : Node2D
     [Signal] public delegate void DropFruitEventHandler();
 
     // Running variables
-    private Fruit heldFruit = null;
+    public Fruit HeldFruit { get; private set; } = null;
 
     public override void _Ready()
     {
@@ -33,13 +33,13 @@ public partial class Player : Node2D
     public override void _Process(double delta)
     {
         if (stop) return;
-        if (heldFruit != null) heldFruit.Position = fruitPosition.GlobalPosition;
+        if (HeldFruit != null) HeldFruit.Position = fruitPosition.GlobalPosition;
     }
 
     public void Reset()
     {
         stop = false;
-        heldFruit = null;
+        HeldFruit = null;
         IsHoldingFruit = false;
         Position = startPosition;
     }
@@ -56,9 +56,9 @@ public partial class Player : Node2D
 
     public void DropHeldFruit()
     {
-        if (heldFruit == null || stop) return;
-        heldFruit.Activate();
-        heldFruit = null;
+        if (HeldFruit == null || stop) return;
+        HeldFruit.Activate();
+        HeldFruit = null;
         IsHoldingFruit = false;
         EmitSignal(SignalName.DropFruit);
     }
@@ -67,11 +67,11 @@ public partial class Player : Node2D
     {
         if (stop) return;
         IsHoldingFruit = true;
-        heldFruit = fruit;
+        HeldFruit = fruit;
 
         // Shift player back into area if newer fruit is bigger
-        float left = fruitPosition.GlobalPosition.X - heldFruit.Radius;
-        float right = fruitPosition.GlobalPosition.X + heldFruit.Radius;
+        float left = fruitPosition.GlobalPosition.X - HeldFruit.Radius;
+        float right = fruitPosition.GlobalPosition.X + HeldFruit.Radius;
         float difference = 0;
         if (right > GameLoop.Instance.BoxBorders.Y) difference = GameLoop.Instance.BoxBorders.Y - right - 2;
         else if (left < GameLoop.Instance.BoxBorders.X) difference = GameLoop.Instance.BoxBorders.X - left + 2;
@@ -91,11 +91,11 @@ public partial class Player : Node2D
 
     private bool IsInBounds()
     {
-        if (heldFruit == null)
+        if (HeldFruit == null)
             return Position.X > GameLoop.Instance.BoxBorders.X && Position.X < GameLoop.Instance.BoxBorders.Y + 40;
 
-        float fruitLeftSide = fruitPosition.GlobalPosition.X - heldFruit.Radius;
-        float fruitRightSide = fruitPosition.GlobalPosition.X + heldFruit.Radius;
+        float fruitLeftSide = fruitPosition.GlobalPosition.X - HeldFruit.Radius;
+        float fruitRightSide = fruitPosition.GlobalPosition.X + HeldFruit.Radius;
         return fruitLeftSide > GameLoop.Instance.BoxBorders.X && fruitRightSide < GameLoop.Instance.BoxBorders.Y;
     }
 }
