@@ -37,6 +37,10 @@ public partial class GameLoop : Node
 		}));
 	}
 
+	public Godot.Collections.Array<Fruit> GetContainerFruits() {
+		return FruitContainer.GetFruitsInBox();
+	}
+
 	public void SetComponent(Node component)
 	{
 		if (component is Player player) Player = player;

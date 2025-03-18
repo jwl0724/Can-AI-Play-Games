@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public partial class Box : Node
@@ -13,6 +14,16 @@ public partial class Box : Node
 	public void Reset()
 	{
 		foreach(Node child in GetChildren()) child.QueueFree();
+	}
+
+	public Godot.Collections.Array<Fruit> GetFruitsInBox() {
+		LinkedList<Fruit> fruits = new(); // LL because faster insertion
+		foreach(Fruit fruit in GetChildren().Cast<Fruit>()) {
+			// Skip the fruit that's being held by the player
+			if (fruit == GameLoop.Instance.Player.HeldFruit) continue;
+			fruits.AddLast(fruit);
+		}
+		return new Godot.Collections.Array<Fruit>(fruits);
 	}
 
 	// Sends fruit flying out of box when game over
