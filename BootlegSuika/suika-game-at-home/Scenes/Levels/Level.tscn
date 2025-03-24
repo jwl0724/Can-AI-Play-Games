@@ -16,10 +16,10 @@
 [ext_resource type="Script" path="res://Scripts/Managers/LosePlaneManager.cs" id="12_l5r1n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iocy2"]
-size = Vector2(20, 500)
+size = Vector2(60, 500)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4d1w0"]
-size = Vector2(550, 20)
+size = Vector2(550, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vx74o"]
 size = Vector2(400, 500)
@@ -130,21 +130,21 @@ position = Vector2(540, 56)
 position = Vector2(257, 373)
 
 [node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Left"]
-position = Vector2(-2, 0)
+position = Vector2(-22, 0)
 shape = SubResource("RectangleShape2D_iocy2")
 
 [node name="Right" type="StaticBody2D" parent="BoxBoundaries"]
 position = Vector2(807, 373)
 
 [node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Right"]
-position = Vector2(-2, 0)
+position = Vector2(18, 0)
 shape = SubResource("RectangleShape2D_iocy2")
 
 [node name="Ground" type="StaticBody2D" parent="BoxBoundaries"]
 position = Vector2(531, 615)
 
 [node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Ground"]
-position = Vector2(-2, 0)
+position = Vector2(-2, 19)
 shape = SubResource("RectangleShape2D_4d1w0")
 
 [node name="LosePlane" type="Node2D" parent="."]
