@@ -17,6 +17,7 @@ public partial class Player : Node2D
 
     // Signals
     [Signal] public delegate void DropFruitEventHandler();
+    [Signal] public delegate void DeathEventHandler();
 
     // Running variables
     public Fruit HeldFruit { get; private set; } = null;
@@ -87,6 +88,7 @@ public partial class Player : Node2D
     {
         stop = true;
         DropHeldFruit();
+        EmitSignal(SignalName.Death);
     }
 
     private bool IsInBounds()
