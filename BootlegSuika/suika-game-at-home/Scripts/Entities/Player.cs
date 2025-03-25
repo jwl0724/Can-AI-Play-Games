@@ -17,7 +17,7 @@ public partial class Player : Node2D
 
     // Signals
     [Signal] public delegate void DropFruitEventHandler();
-    [Signal] public delegate void DeathEventHandler();
+    [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
 
     // Running variables
     public Fruit HeldFruit { get; private set; } = null;
@@ -88,7 +88,7 @@ public partial class Player : Node2D
     {
         stop = true;
         DropHeldFruit();
-        EmitSignal(SignalName.Death);
+        EmitSignal(SignalName.death);
     }
 
     private bool IsInBounds()
