@@ -1,24 +1,15 @@
 using Godot;
 using System;
 
-public partial class AI : Player
+// Each agent needs to be the entire game scene (no shared map)
+public partial class Agent : GameLoop
 {
     public static readonly short NeuralNetInputCount = 7;
     public static readonly short NeuralNetOutputCount = 2;
-
     [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
-
-    // Override functions from player
-    public override void _Ready()
-    {
-        fruitPosition = GetNode<Node2D>("FruitPosition");
-
-        // TODO: Use specific game suika game instance -> Also create scene for AI
-    }
-
-    // Functions required for NEAT integration, follows gdscript naming conventions for easier integration
     [Export] private RayCast2D ray; // Taken from dropper preview UI raycast
 
+    // Functions required for NEAT integration, follows gdscript naming conventions for easier integration
     // Information to feed network with
     public Godot.Collections.Array sense() {
         Godot.Collections.Array inputData = new();
@@ -26,14 +17,14 @@ public partial class AI : Player
         inputData.Add((int) (Owner as GameLoop).NextFruit);
 
         // Held fruit -> x, y, fruit type
-        if (HeldFruit == null) {
+        if (Player.HeldFruit == null) {
             inputData.Add(0); // Play area is 300 to 780 range, so 0, 0 is impossible -> no fruit held
             inputData.Add(0);
             inputData.Add(-1); // Enum can't be -1 -> no fruit held
         } else {
-            inputData.Add(HeldFruit.Position.X);
-            inputData.Add(HeldFruit.Position.Y);
-            inputData.Add((int) HeldFruit.Type);
+            inputData.Add(Player.HeldFruit.Position.X);
+            inputData.Add(Player.HeldFruit.Position.Y);
+            inputData.Add((int) Player.HeldFruit.Type);
         }
         // Targetted fruit -> x, y, fruit type
         Fruit targettedFruit = GetTargettedFruit();
@@ -52,13 +43,13 @@ public partial class AI : Player
 
     // Output action to act with
     public void act(Godot.Collections.Array<float> networkOutput) {
-        if (networkOutput[0] > 0.5f) DropHeldFruit();
-        if (networkOutput[1] < -0.5f) Move(-1, GetProcessDeltaTime());
-        if (networkOutput[1] > 0.5f) Move(1, GetProcessDeltaTime());
+        if (networkOutput[0] > 0.5f) Player.DropHeldFruit();
+        if (networkOutput[1] < -0.5f) Player.Move(-1, GetProcessDeltaTime());
+        if (networkOutput[1] > 0.5f) Player.Move(1, GetProcessDeltaTime());
     }
 
     public int get_fitness() {
-        return (Owner as GameLoop).Score;
+        return Score;
     }
 
     private Fruit GetTargettedFruit() {
@@ -67,8 +58,10 @@ public partial class AI : Player
         else return fruit;
     }
 
-    private void OnGameOver()
+    // METHOD OVERRIDES SECTION
+    public override void EndGame()
     {
+        base.EndGame();
         EmitSignal(SignalName.death);
     }
 }

@@ -75,7 +75,7 @@ public partial class GameLoop : Node
 		EmitSignal(SignalName.NextFruitPicked, (int) NextFruit);
 	}
 
-	public void EndGame()
+	public virtual void EndGame()
 	{
 		EmitSignal(SignalName.GameOver, Score);
 		Playing = false;
