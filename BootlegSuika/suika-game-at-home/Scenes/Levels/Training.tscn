@@ -1,18 +1,16 @@
-[gd_scene load_steps=19 format=3 uid="uid://beqcwamogwgou"]
+[gd_scene load_steps=17 format=3 uid="uid://beqcwamogwgou"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/NeuralNetManager.cs" id="1_iaema"]
 [ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="1_jubvv"]
 [ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="2_l1w7p"]
 [ext_resource type="PackedScene" uid="uid://xx7htrj18hf4" path="res://Scenes/UI/Static/BoxVisuals.tscn" id="3_bmxr5"]
 [ext_resource type="PackedScene" uid="uid://clch51u5vbqop" path="res://Scenes/UI/Dynamic/GameOverMenu.tscn" id="4_1u8uu"]
-[ext_resource type="PackedScene" uid="uid://c5fesbbfw3e43" path="res://Scenes/UI/Static/FruitOrder.tscn" id="5_s44o3"]
 [ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="6_42yij"]
 [ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="7_7q5cg"]
 [ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="8_8qope"]
 [ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="9_murvf"]
 [ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="10_xmmjw"]
 [ext_resource type="PackedScene" uid="uid://c6gajoa5flv26" path="res://Scenes/Managers/SFXManager.tscn" id="11_mjrvm"]
-[ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="12_kvfq8"]
 [ext_resource type="Script" path="res://Scripts/Managers/LosePlaneManager.cs" id="13_ck440"]
 [ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="14_1nfqy"]
 
@@ -70,21 +68,6 @@ grow_vertical = 2
 z_index = 1
 layout_mode = 1
 
-[node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("5_s44o3")]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -177.0
-offset_top = -173.0
-offset_right = -177.0
-offset_bottom = -173.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(0.7, 0.7)
-
 [node name="NextFruit" parent="Visuals/UI" instance=ExtResource("6_42yij")]
 layout_mode = 1
 anchors_preset = 1
@@ -122,8 +105,7 @@ fruitScene = ExtResource("10_xmmjw")
 
 [node name="SFXManager" parent="Managers" instance=ExtResource("11_mjrvm")]
 
-[node name="Player" parent="." instance=ExtResource("12_kvfq8")]
-z_index = 1
+[node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2(540, 56)
 
 [node name="BoxBoundaries" type="Node2D" parent="."]
