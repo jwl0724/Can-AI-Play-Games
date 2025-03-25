@@ -1,10 +1,20 @@
 using Godot;
 using System;
 
-public partial class Player : Node2D
+public partial class AI : Player
 {
     public static readonly short NeuralNetInputCount = 7;
     public static readonly short NeuralNetOutputCount = 2;
+
+    [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
+
+    // Override functions from player
+    public override void _Ready()
+    {
+        fruitPosition = GetNode<Node2D>("FruitPosition");
+
+        // TODO: Use specific game suika game instance -> Also create scene for AI
+    }
 
     // Functions required for NEAT integration, follows gdscript naming conventions for easier integration
     [Export] private RayCast2D ray; // Taken from dropper preview UI raycast
@@ -25,7 +35,6 @@ public partial class Player : Node2D
             inputData.Add(HeldFruit.Position.Y);
             inputData.Add((int) HeldFruit.Type);
         }
-
         // Targetted fruit -> x, y, fruit type
         Fruit targettedFruit = GetTargettedFruit();
         if (targettedFruit == null) {
@@ -56,5 +65,10 @@ public partial class Player : Node2D
         GodotObject collider = ray.GetCollider();
         if (collider is not Fruit fruit) return null;
         else return fruit;
+    }
+
+    private void OnGameOver()
+    {
+        EmitSignal(SignalName.death);
     }
 }

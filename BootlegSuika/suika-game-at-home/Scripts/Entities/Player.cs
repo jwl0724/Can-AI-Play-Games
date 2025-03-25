@@ -8,7 +8,7 @@ public partial class Player : Node2D
     private Vector2 startPosition;
 
     // Components
-    private Node2D fruitPosition;
+    protected Node2D fruitPosition;
 
     // Running variables
     [Export] public float Speed { get; private set; } = 200;
@@ -17,7 +17,6 @@ public partial class Player : Node2D
 
     // Signals
     [Signal] public delegate void DropFruitEventHandler();
-    [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
 
     // Running variables
     public Fruit HeldFruit { get; private set; } = null;
@@ -88,7 +87,6 @@ public partial class Player : Node2D
     {
         stop = true;
         DropHeldFruit();
-        EmitSignal(SignalName.death);
     }
 
     private bool IsInBounds()

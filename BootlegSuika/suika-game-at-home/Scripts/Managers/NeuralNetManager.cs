@@ -45,8 +45,8 @@ public partial class NeuralNetManager : Node
     {
         spawnPoint = GetNode<Node2D>("SpawnPoint");
 
-        // Init genetic algorithm
-        GA = (GodotObject) GAScript.New(Player.NeuralNetInputCount, Player.NeuralNetOutputCount,
+        // Init genetic algorithm (TODO: Create AI scene that's identical to player)
+        GA = (GodotObject) GAScript.New(AI.NeuralNetInputCount, AI.NeuralNetOutputCount,
                 "res://Scenes/Prefabs/Player.tscn", false);
         AddChild((Node) GA);
         PlaceBodies((Godot.Collections.Array) GA.Call(GetCurrentBodies));
