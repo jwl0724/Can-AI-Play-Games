@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class TrainingLoop : Node
+public partial class TrainingManager : Node
 {
     // Training parameters
     [Export] private int trainingLoops = 300;
@@ -10,6 +10,7 @@ public partial class TrainingLoop : Node
 
     // Components
     private Timer timer;
+    private Node gameScenes; // Node to instantiate the multiple game scenes
     private NeuralNetManager neuralNet;
 
     // Running variables
@@ -19,11 +20,10 @@ public partial class TrainingLoop : Node
     public override void _Ready()
     {
         neuralNet = GetNode<NeuralNetManager>("NeuralNetManager");
-
         timer = GetNode<Timer>("IterationTimer");
+
         timer.WaitTime = timeLimitPerGeneration;
-        // timer.Connect(Timer.SignalName.Timeout, )
+        timer.Connect(Timer.SignalName.Timeout, Callable.From(() => neuralNet.StartNextGeneration()));
+        neuralNet.StartTraining(this);
     }
-
-
 }
