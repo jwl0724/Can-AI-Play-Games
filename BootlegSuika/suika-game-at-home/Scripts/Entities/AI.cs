@@ -23,7 +23,7 @@ public partial class AI : Player
     public Godot.Collections.Array sense() {
         Godot.Collections.Array inputData = new();
         // Next fruit -> type
-        inputData.Add((int) GameLoop.Instance.NextFruit);
+        inputData.Add((int) (Owner as GameLoop).NextFruit);
 
         // Held fruit -> x, y, fruit type
         if (HeldFruit == null) {
@@ -58,7 +58,7 @@ public partial class AI : Player
     }
 
     public int get_fitness() {
-        return GameLoop.Instance.Score;
+        return (Owner as GameLoop).Score;
     }
 
     private Fruit GetTargettedFruit() {

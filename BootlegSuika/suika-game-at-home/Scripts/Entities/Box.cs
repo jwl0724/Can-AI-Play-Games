@@ -1,14 +1,15 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 public partial class Box : Node
 {
+	public bool AllowFusion => (Owner as GameLoop).Playing;
+
 	public override void _Ready()
 	{
-		GameLoop.Instance.SetComponent(this);
-		GameLoop.Instance.Connect(GameLoop.SignalName.GameOver, Callable.From((int score) => OnGameOver()));
+		GameLoop game = Owner as GameLoop;
+		game.Connect(GameLoop.SignalName.GameOver, Callable.From((int score) => OnGameOver()));
 	}
 
 	public void Reset()
@@ -20,10 +21,15 @@ public partial class Box : Node
 		LinkedList<Fruit> fruits = new(); // LL because faster insertion
 		foreach(Fruit fruit in GetChildren().Cast<Fruit>()) {
 			// Skip the fruit that's being held by the player
-			if (fruit == GameLoop.Instance.Player.HeldFruit) continue;
+			if (fruit == (Owner as GameLoop).Player.HeldFruit) continue;
 			fruits.AddLast(fruit);
 		}
 		return new Godot.Collections.Array<Fruit>(fruits);
+	}
+
+	public void AddScore(int score)
+	{
+		(Owner as GameLoop).AddScore(score);
 	}
 
 	// Sends fruit flying out of box when game over
@@ -31,7 +37,7 @@ public partial class Box : Node
 	{
 		foreach(Fruit fruit in GetChildren().Cast<Fruit>())
 		{
-			if (!fruit.InBounds || fruit == GameLoop.Instance.CurrentFruit) continue;
+			if (!fruit.InBounds || fruit == (Owner as GameLoop).CurrentFruit) continue;
 
 			// Activate physics and make them fall through box
 			fruit.Activate();

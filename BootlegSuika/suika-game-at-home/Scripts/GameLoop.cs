@@ -1,16 +1,8 @@
 using Godot;
 using System;
 
-// TODO: Add menu for it + retry button for game over
 public partial class GameLoop : Node
 {
-	// Training or Playing
-	public enum Gamemode { UNINITIALIZED, AI, MANUAL }
-	public static Gamemode Mode { get; private set; } = Gamemode.UNINITIALIZED;
-
-	// Singleton
-	public static GameLoop Instance { get; private set; }
-
 	// Components (Need the components to set themselves since this loads way before them)
 	public Player Player { get; private set; }
 	public Box FruitContainer { get; private set; }
@@ -22,7 +14,6 @@ public partial class GameLoop : Node
 	[Signal] public delegate void GameOverEventHandler(int score);
 	[Signal] public delegate void GameStartEventHandler();
 	[Signal] public delegate void PauseStateChangeEventHandler(bool paused);
-	[Signal] public delegate void ComponentConnectedEventHandler(Node component);
 
 	// Running variables
 	public Vector2 BoxBorders { get; private set; } = new Vector2(265, 795);
@@ -34,29 +25,20 @@ public partial class GameLoop : Node
 
 	public override void _Ready()
 	{
-		Instance ??= this;
-
-		if (Mode == Gamemode.UNINITIALIZED) {
-			if (GetTree().CurrentScene is NeuralNetManager) Mode = Gamemode.AI;
-			else Mode = Gamemode.MANUAL;
-		}
-
-		// TODO: OH GOD FIND A WAY TO WAIT FOR EVERYTHING TO LOAD, THIS IS GENUINELY AWFUL
-		Connect(SignalName.ComponentConnected, Callable.From((Node component) => {
-			if (Player != null && FruitContainer != null && Builder != null) StartGame();
-		}));
+		FruitContainer = GetNode<Box>("Box");
+		Builder = GetNode<FruitBuilder>("Managers/FruitBuilder");
+		Player = GetNode<Player>("Player");
+		StartGame();
 	}
 
 	public Godot.Collections.Array<Fruit> GetContainerFruits() {
 		return FruitContainer.GetFruitsInBox();
 	}
 
-	public void SetComponent(Node component)
+	// Only called in the training scene
+	public void DisablePlayerInput(bool disabled)
 	{
-		if (component is Player player) Player = player;
-		else if (component is Box box) FruitContainer = box;
-		else if (component is FruitBuilder builder) Builder = builder;
-		EmitSignal(SignalName.ComponentConnected, component);
+		Player.DisablePlayerInput(disabled);
 	}
 
 	public void AddScore(int score)

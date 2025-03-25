@@ -16,7 +16,7 @@ public partial class GameOverUI : Control
 		retryButton.Disabled = true;
 
 		retryButton.Connect("pressed", new Callable(this, nameof(OnRetry)));
-		GameLoop.Instance.Connect(GameLoop.SignalName.GameOver, new Callable(this, nameof(OnGameOver)));
+		(Owner as GameLoop).Connect(GameLoop.SignalName.GameOver, new Callable(this, nameof(OnGameOver)));
 	}
 
 	private void OnGameOver(int score)
@@ -35,6 +35,6 @@ public partial class GameOverUI : Control
 		Tween hideTween = CreateTween();
 		hideTween.TweenProperty(this, nameof(Position).ToLower(), new Vector2(defaultPosition.X, 2000), 0.5);
 		hideTween.Play();
-		GameLoop.Instance.ResetGame();
+		(Owner as GameLoop).ResetGame();
 	}
 }

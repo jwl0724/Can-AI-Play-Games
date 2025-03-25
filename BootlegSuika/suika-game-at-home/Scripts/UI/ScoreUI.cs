@@ -18,8 +18,8 @@ public partial class ScoreUI : Control
         bestScoreLabel.Text = bestScore.ToString();
 
         // Connect signal
-        GameLoop.Instance.Connect(GameLoop.SignalName.GameOver, Callable.From((int score) => OnGameOver(score)));
-        GameLoop.Instance.Connect(GameLoop.SignalName.ScoreChange, Callable.From((int score) => OnScoreChange(score)));
+        (Owner as GameLoop).Connect(GameLoop.SignalName.GameOver, Callable.From((int score) => OnGameOver(score)));
+        (Owner as GameLoop).Connect(GameLoop.SignalName.ScoreChange, Callable.From((int score) => OnScoreChange(score)));
     }
 
     private void OnScoreChange(int newScore)

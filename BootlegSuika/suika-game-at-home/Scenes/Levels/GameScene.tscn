@@ -1,19 +1,19 @@
 [gd_scene load_steps=18 format=3 uid="uid://dvf60valdas0p"]
 
-[ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="1_d31xk"]
-[ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="1_sqc1b"]
-[ext_resource type="PackedScene" uid="uid://xx7htrj18hf4" path="res://Scenes/UI/Static/BoxVisuals.tscn" id="2_bnjeo"]
-[ext_resource type="PackedScene" uid="uid://c5fesbbfw3e43" path="res://Scenes/UI/Static/FruitOrder.tscn" id="2_t27h5"]
-[ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="3_2mfsj"]
-[ext_resource type="PackedScene" uid="uid://clch51u5vbqop" path="res://Scenes/UI/Dynamic/GameOverMenu.tscn" id="4_4hmhp"]
-[ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="4_mltmp"]
-[ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="7_h2je7"]
-[ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="7_mpm85"]
-[ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="8_3dpj2"]
-[ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="8_hbkey"]
-[ext_resource type="PackedScene" uid="uid://c6gajoa5flv26" path="res://Scenes/Managers/SFXManager.tscn" id="10_6c6uh"]
-[ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="11_spe3k"]
-[ext_resource type="Script" path="res://Scripts/Managers/LosePlaneManager.cs" id="12_l5r1n"]
+[ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="1_2dgol"]
+[ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="2_wxdlc"]
+[ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="3_idvl6"]
+[ext_resource type="PackedScene" uid="uid://xx7htrj18hf4" path="res://Scenes/UI/Static/BoxVisuals.tscn" id="4_lf6a0"]
+[ext_resource type="PackedScene" uid="uid://clch51u5vbqop" path="res://Scenes/UI/Dynamic/GameOverMenu.tscn" id="5_qv83r"]
+[ext_resource type="PackedScene" uid="uid://c5fesbbfw3e43" path="res://Scenes/UI/Static/FruitOrder.tscn" id="6_72fy6"]
+[ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="7_pobff"]
+[ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="8_mo8gx"]
+[ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="9_3qa3x"]
+[ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="10_pjmk6"]
+[ext_resource type="PackedScene" uid="uid://c6gajoa5flv26" path="res://Scenes/Managers/SFXManager.tscn" id="11_warx2"]
+[ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="12_0bps8"]
+[ext_resource type="Script" path="res://Scripts/Managers/LosePlaneManager.cs" id="13_2q5tr"]
+[ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="14_2ia7l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iocy2"]
 size = Vector2(60, 500)
@@ -25,11 +25,12 @@ size = Vector2(550, 60)
 size = Vector2(400, 500)
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_2dgol")
 
 [node name="Canvas" type="CanvasLayer" parent="."]
 
 [node name="Box" type="Node" parent="."]
-script = ExtResource("11_spe3k")
+script = ExtResource("2_wxdlc")
 
 [node name="Visuals" type="Node" parent="."]
 
@@ -40,9 +41,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_sqc1b")
+texture = ExtResource("3_idvl6")
 
-[node name="BoxVisuals" parent="Visuals" instance=ExtResource("2_bnjeo")]
+[node name="BoxVisuals" parent="Visuals" instance=ExtResource("4_lf6a0")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -64,11 +65,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameOverMenu" parent="Visuals/UI" instance=ExtResource("4_4hmhp")]
+[node name="GameOverMenu" parent="Visuals/UI" instance=ExtResource("5_qv83r")]
 z_index = 1
 layout_mode = 1
 
-[node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("2_t27h5")]
+[node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("6_72fy6")]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -83,7 +84,7 @@ grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.7, 0.7)
 
-[node name="NextFruit" parent="Visuals/UI" instance=ExtResource("3_2mfsj")]
+[node name="NextFruit" parent="Visuals/UI" instance=ExtResource("7_pobff")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -96,7 +97,7 @@ grow_horizontal = 0
 grow_vertical = 1
 scale = Vector2(0.7, 0.7)
 
-[node name="ScoreBubble" parent="Visuals/UI" instance=ExtResource("4_mltmp")]
+[node name="ScoreBubble" parent="Visuals/UI" instance=ExtResource("8_mo8gx")]
 layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
@@ -111,16 +112,13 @@ scale = Vector2(0.7, 0.7)
 
 [node name="Managers" type="Node" parent="."]
 
-[node name="MainLoop" type="Node" parent="Managers"]
-script = ExtResource("1_d31xk")
-
 [node name="FruitBuilder" type="Node" parent="Managers"]
-script = ExtResource("7_h2je7")
-fruitScene = ExtResource("8_hbkey")
+script = ExtResource("9_3qa3x")
+fruitScene = ExtResource("10_pjmk6")
 
-[node name="SFXManager" parent="Managers" instance=ExtResource("10_6c6uh")]
+[node name="SFXManager" parent="Managers" instance=ExtResource("11_warx2")]
 
-[node name="Player" parent="." instance=ExtResource("8_3dpj2")]
+[node name="Player" parent="." instance=ExtResource("12_0bps8")]
 z_index = 1
 position = Vector2(540, 56)
 
@@ -148,7 +146,7 @@ position = Vector2(-2, 19)
 shape = SubResource("RectangleShape2D_4d1w0")
 
 [node name="LosePlane" type="Node2D" parent="."]
-script = ExtResource("12_l5r1n")
+script = ExtResource("13_2q5tr")
 
 [node name="Left" type="Area2D" parent="LosePlane"]
 position = Vector2(45, 398)
@@ -165,5 +163,5 @@ monitorable = false
 shape = SubResource("RectangleShape2D_vx74o")
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_mpm85")
+stream = ExtResource("14_2ia7l")
 autoplay = true

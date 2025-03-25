@@ -6,11 +6,6 @@ public partial class FruitBuilder : Node
 	[Export] private PackedScene fruitScene;
 	private static readonly float radiusLevelFactor = 10;
 
-	public override void _Ready()
-	{
-		GameLoop.Instance.SetComponent(this);
-	}
-
 	// Returns a reference to the instantiated fruit on the scene
 	public Fruit BuildFruit(FruitType type, Vector2 position, bool fromFusion)
 	{
@@ -73,7 +68,7 @@ public partial class FruitBuilder : Node
 	private Fruit InstantiateFruit(FruitType type, CompressedTexture2D sprite, Vector2 position, int score, float radius, bool fromFusion)
 	{
 		Fruit fruit = fruitScene.Instantiate<Fruit>();
-		GameLoop.Instance.FruitContainer.AddChild(fruit);
+		(Owner as GameLoop).FruitContainer.AddChild(fruit);
 		fruit.SetAttributes(this, type, sprite, score, radius, fromFusion);
 		fruit.Position = position;
 

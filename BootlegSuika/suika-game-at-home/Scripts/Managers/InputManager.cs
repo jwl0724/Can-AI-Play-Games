@@ -13,7 +13,7 @@ public partial class InputManager : Node
 
 	public override void _Process(double delta)
 	{
-		if (GameLoop.Mode == GameLoop.Gamemode.AI) return;
+		if (player.InputDisabled) return;
 		ProcessManualMode(delta);
 	}
 

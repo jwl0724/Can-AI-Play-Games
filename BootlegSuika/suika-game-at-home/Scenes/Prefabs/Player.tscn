@@ -5,9 +5,8 @@
 [ext_resource type="Script" path="res://Scripts/UI/DropperPreviewUI.cs" id="3_5fa3d"]
 [ext_resource type="Script" path="res://Scripts/Managers/InputManager.cs" id="3_nemtl"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("ray")]
+[node name="Player" type="Node2D"]
 script = ExtResource("1_xdv36")
-ray = NodePath("FruitPosition/DropLine/Raycast")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = -1

@@ -1,11 +1,11 @@
 using Godot;
 using System;
 
-// TODO: Add a line between fruit position and the closest fruit down
 public partial class Player : Node2D
 {
     // Constants
-    private Vector2 startPosition;
+    public Vector2 StartPosition { get; private set; } = new Vector2(540, 56);
+    private Vector2 BoxBorders;
 
     // Components
     protected Node2D fruitPosition;
@@ -13,7 +13,8 @@ public partial class Player : Node2D
     // Running variables
     [Export] public float Speed { get; private set; } = 200;
     public bool IsHoldingFruit { get; private set; } = false;
-    private bool stop = false;
+    public bool InputDisabled { get; private set; } = false;
+    public bool IsDead { get; private set; } = false;
 
     // Signals
     [Signal] public delegate void DropFruitEventHandler();
@@ -24,29 +25,34 @@ public partial class Player : Node2D
     public override void _Ready()
     {
         fruitPosition = GetNode<Node2D>("FruitPosition");
-        startPosition = Position;
+        StartPosition = Position;
 
-        GameLoop.Instance.SetComponent(this);
-        GameLoop.Instance.Connect(GameLoop.SignalName.GameOver, Callable.From((int score) => OnGameOver()));
+        GameLoop game = Owner as GameLoop;
+        game.Connect(GameLoop.SignalName.GameOver, Callable.From((int score) => OnGameOver()));
+        BoxBorders = game.BoxBorders;
     }
 
     public override void _Process(double delta)
     {
-        if (stop) return;
+        if (IsDead) return;
         if (HeldFruit != null) HeldFruit.Position = fruitPosition.GlobalPosition;
+    }
+
+    public void DisablePlayerInput(bool disabled) {
+        InputDisabled = disabled;
     }
 
     public void Reset()
     {
-        stop = false;
+        IsDead = false;
         HeldFruit = null;
         IsHoldingFruit = false;
-        Position = startPosition;
+        Position = StartPosition;
     }
 
     public void Move(float direction, double delta)
     {
-        if (stop) return;
+        if (IsDead) return;
 
         Vector2 component = Vector2.Right * direction * Speed * (float) delta;
         Position += component;
@@ -56,7 +62,7 @@ public partial class Player : Node2D
 
     public void DropHeldFruit()
     {
-        if (HeldFruit == null || stop) return;
+        if (HeldFruit == null || IsDead) return;
         HeldFruit.Activate();
         HeldFruit = null;
         IsHoldingFruit = false;
@@ -65,7 +71,7 @@ public partial class Player : Node2D
 
     public void GiveFruit(Fruit fruit)
     {
-        if (stop) return;
+        if (IsDead) return;
         IsHoldingFruit = true;
         HeldFruit = fruit;
 
@@ -73,8 +79,9 @@ public partial class Player : Node2D
         float left = fruitPosition.GlobalPosition.X - HeldFruit.Radius;
         float right = fruitPosition.GlobalPosition.X + HeldFruit.Radius;
         float difference = 0;
-        if (right > GameLoop.Instance.BoxBorders.Y) difference = GameLoop.Instance.BoxBorders.Y - right - 2;
-        else if (left < GameLoop.Instance.BoxBorders.X) difference = GameLoop.Instance.BoxBorders.X - left + 2;
+
+        if (right > BoxBorders.Y) difference = BoxBorders.Y - right - 2;
+        else if (left < BoxBorders.X) difference = BoxBorders.X - left + 2;
         Position += Vector2.Right * difference;
     }
 
@@ -85,17 +92,17 @@ public partial class Player : Node2D
 
     private void OnGameOver()
     {
-        stop = true;
+        IsDead = true;
         DropHeldFruit();
     }
 
     private bool IsInBounds()
     {
         if (HeldFruit == null)
-            return Position.X > GameLoop.Instance.BoxBorders.X && Position.X < GameLoop.Instance.BoxBorders.Y + 40;
+            return Position.X > BoxBorders.X && Position.X < BoxBorders.Y + 40;
 
         float fruitLeftSide = fruitPosition.GlobalPosition.X - HeldFruit.Radius;
         float fruitRightSide = fruitPosition.GlobalPosition.X + HeldFruit.Radius;
-        return fruitLeftSide > GameLoop.Instance.BoxBorders.X && fruitRightSide < GameLoop.Instance.BoxBorders.Y;
+        return fruitLeftSide > BoxBorders.X && fruitRightSide < BoxBorders.Y;
     }
 }
