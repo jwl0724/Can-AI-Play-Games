@@ -4,6 +4,10 @@ using System;
 // TODO: Add menu for it + retry button for game over
 public partial class GameLoop : Node
 {
+	// Training or Playing
+	public enum Gamemode { UNINITIALIZED, AI, MANUAL }
+	public static Gamemode Mode { get; private set; } = Gamemode.UNINITIALIZED;
+
 	// Singleton
 	public static GameLoop Instance { get; private set; }
 
@@ -16,6 +20,7 @@ public partial class GameLoop : Node
 	[Signal] public delegate void ScoreChangeEventHandler(int score);
 	[Signal] public delegate void NextFruitPickedEventHandler(int fruitType); // Expected to typecast back to FruitType
 	[Signal] public delegate void GameOverEventHandler(int score);
+	[Signal] public delegate void GameStartEventHandler();
 	[Signal] public delegate void PauseStateChangeEventHandler(bool paused);
 	[Signal] public delegate void ComponentConnectedEventHandler(Node component);
 
@@ -30,6 +35,11 @@ public partial class GameLoop : Node
 	public override void _Ready()
 	{
 		Instance ??= this;
+
+		if (Mode == Gamemode.UNINITIALIZED) {
+			if (GetTree().CurrentScene is NeuralNetManager) Mode = Gamemode.AI;
+			else Mode = Gamemode.MANUAL;
+		}
 
 		// TODO: OH GOD FIND A WAY TO WAIT FOR EVERYTHING TO LOAD, THIS IS GENUINELY AWFUL
 		Connect(SignalName.ComponentConnected, Callable.From((Node component) => {
@@ -105,5 +115,6 @@ public partial class GameLoop : Node
 		CurrentFruit = null;
 		ChooseNextFruit();
 		SpawnFruit();
+		EmitSignal(SignalName.GameStart);
 	}
 }
