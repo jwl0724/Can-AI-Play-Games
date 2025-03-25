@@ -3,6 +3,9 @@ using System;
 
 public partial class Player : Node2D
 {
+    public static readonly short NeuralNetInputCount = 7;
+    public static readonly short NeuralNetOutputCount = 2;
+
     // Functions required for NEAT integration, follows gdscript naming conventions for easier integration
     [Export] private RayCast2D ray; // Taken from dropper preview UI raycast
 
