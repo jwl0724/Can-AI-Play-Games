@@ -1,19 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://c1f4twp7hm47w"]
+[gd_scene load_steps=13 format=3 uid="uid://c1f4twp7hm47w"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="1_la750"]
 [ext_resource type="Script" path="res://Scripts/Entities/Agent.cs" id="1_rwrpj"]
 [ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="2_4hhu3"]
 [ext_resource type="PackedScene" uid="uid://xx7htrj18hf4" path="res://Scenes/UI/Static/BoxVisuals.tscn" id="3_s2fcx"]
-[ext_resource type="PackedScene" uid="uid://clch51u5vbqop" path="res://Scenes/UI/Dynamic/GameOverMenu.tscn" id="4_ir830"]
-[ext_resource type="PackedScene" uid="uid://c5fesbbfw3e43" path="res://Scenes/UI/Static/FruitOrder.tscn" id="5_t60vq"]
-[ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="6_5edjh"]
-[ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="7_l11py"]
 [ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="8_2k022"]
 [ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="9_s8hok"]
 [ext_resource type="PackedScene" uid="uid://c6gajoa5flv26" path="res://Scenes/Managers/SFXManager.tscn" id="10_6l0ta"]
 [ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="11_0hi0j"]
 [ext_resource type="Script" path="res://Scripts/Managers/LosePlaneManager.cs" id="12_w3a22"]
-[ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="13_py4qh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iocy2"]
 size = Vector2(60, 500)
@@ -33,10 +28,15 @@ ray = NodePath("Player/FruitPosition/DropLine/Raycast")
 [node name="Box" type="Node" parent="."]
 script = ExtResource("1_la750")
 
-[node name="Visuals" type="Node" parent="."]
+[node name="Visuals" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="Background" type="TextureRect" parent="Visuals"]
 z_index = -1
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -45,6 +45,7 @@ grow_vertical = 2
 texture = ExtResource("2_4hhu3")
 
 [node name="BoxVisuals" parent="Visuals" instance=ExtResource("3_s2fcx")]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -56,60 +57,6 @@ offset_right = -56.0
 offset_bottom = 51.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="UI" type="Control" parent="Visuals"]
-z_index = -1
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GameOverMenu" parent="Visuals/UI" instance=ExtResource("4_ir830")]
-z_index = 1
-layout_mode = 1
-
-[node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("5_t60vq")]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -177.0
-offset_top = -173.0
-offset_right = -177.0
-offset_bottom = -173.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(0.7, 0.7)
-
-[node name="NextFruit" parent="Visuals/UI" instance=ExtResource("6_5edjh")]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_bottom = 0.0
-offset_left = -177.0
-offset_top = 150.0
-offset_right = -177.0
-offset_bottom = 150.0
-grow_horizontal = 0
-grow_vertical = 1
-scale = Vector2(0.7, 0.7)
-
-[node name="ScoreBubble" parent="Visuals/UI" instance=ExtResource("7_l11py")]
-layout_mode = 1
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 125.0
-offset_top = 125.0
-offset_right = 125.0
-offset_bottom = 125.0
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(0.7, 0.7)
 
 [node name="Managers" type="Node" parent="."]
 
@@ -162,7 +109,3 @@ monitorable = false
 
 [node name="Shape" type="CollisionShape2D" parent="LosePlane/Right"]
 shape = SubResource("RectangleShape2D_vx74o")
-
-[node name="BGM" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_py4qh")
-autoplay = true
