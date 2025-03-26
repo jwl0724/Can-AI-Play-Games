@@ -4,6 +4,7 @@ using System;
 // Each agent needs to be the entire game scene (no shared map)
 public partial class Agent : GameLoop
 {
+    public static readonly string Path = "res://Scenes/Prefabs/Agent.tscn";
     public static readonly short NeuralNetInputCount = 7;
     public static readonly short NeuralNetOutputCount = 2;
     [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
