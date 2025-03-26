@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class GameLoop : Node
+public partial class GameLoop : Node2D
 {
 	// Components (Need the components to set themselves since this loads way before them)
 	public Player Player { get; private set; }
