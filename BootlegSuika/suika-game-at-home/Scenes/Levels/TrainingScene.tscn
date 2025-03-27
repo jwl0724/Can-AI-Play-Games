@@ -11,7 +11,6 @@ script = ExtResource("1_p51jp")
 [node name="Games" type="Node" parent="."]
 
 [node name="IterationTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="NeuralNetManager" type="Node" parent="." node_paths=PackedStringArray("gameScenes")]
 script = ExtResource("1_0862w")

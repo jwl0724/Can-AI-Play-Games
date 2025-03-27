@@ -37,6 +37,7 @@ public partial class TrainingManager : Node
         timer.WaitTime = timeLimitPerGeneration;
         timer.Connect(Timer.SignalName.Timeout, new Callable(this, nameof(NextIteration)));
         neuralNet.StartTraining();
+        timer.Start();
     }
 
     public override void _Process(double delta)
@@ -69,6 +70,7 @@ public partial class TrainingManager : Node
     private void EndTraining()
     {
         // TODO: Figure out how to save training data
+        timer.Stop();
         neuralNet.StopTraining();
     }
 }
