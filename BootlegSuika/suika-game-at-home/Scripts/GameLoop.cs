@@ -16,7 +16,7 @@ public partial class GameLoop : Node2D
 	[Signal] public delegate void PauseStateChangeEventHandler(bool paused);
 
 	// Running variables
-	public Vector2 BoxBorders { get; private set; } = new Vector2(265, 795);
+	public Vector2 BoxBorders { get; protected set; } = new Vector2(265, 795);
 	public bool Paused { get; private set; } = false;
 	public bool Playing { get; private set; } = false;
 	public int Score { get; private set; } = 0;
