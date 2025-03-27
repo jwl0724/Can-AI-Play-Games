@@ -41,7 +41,6 @@ public partial class NeuralNetManager : Node
         Godot.Collections.Array agents = neat.GetCurrentBodies();
         foreach(Agent agent in agents)
         {
-            agent.Connect(Agent.SignalName.ScoreChange, Callable.From((int score) => manager.ExtendTimer()));
             agent.CallDeferred(nameof(agent.DisablePlayerInput));
         }
         PlaceBodies(agents);
