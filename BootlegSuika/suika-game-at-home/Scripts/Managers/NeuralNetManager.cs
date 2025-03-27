@@ -17,8 +17,9 @@ public partial class NeuralNetManager : Node
 
     public override void _Ready()
     {
-        neat = new NEATWrapper(Agent.NeuralNetInputCount, Agent.NeuralNetOutputCount, Agent.Path, false);
         manager = Owner as TrainingManager;
+        neat = new NEATWrapper(Agent.NeuralNetInputCount, Agent.NeuralNetOutputCount, manager.AgentCount, Agent.Path, false);
+        GD.Print($"--- STARTING TRAINING FOR {neat.GetCurrentBodies().Count} AGENTS ---");
         AddChild(neat.GA);
     }
 
