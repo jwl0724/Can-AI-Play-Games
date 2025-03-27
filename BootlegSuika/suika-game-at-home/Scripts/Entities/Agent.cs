@@ -15,7 +15,7 @@ public partial class Agent : GameLoop
     public Godot.Collections.Array sense() {
         Godot.Collections.Array inputData = new();
         // Next fruit -> type
-        inputData.Add((int) (Owner as GameLoop).NextFruit);
+        inputData.Add((int) NextFruit);
 
         // Held fruit -> x, y, fruit type
         if (Player.HeldFruit == null) {
