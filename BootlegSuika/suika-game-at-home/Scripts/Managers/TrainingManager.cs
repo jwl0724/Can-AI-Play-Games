@@ -6,9 +6,8 @@ public partial class TrainingManager : Node
     // Training parameters
     [Export] public string NetworkName { get; private set; } = "GamerAI"; // Saved network name
     [Export] private int trainingLoops = 300;
-    [Export] private int timeLimitPerGeneration = 20;
-    [Export] private int maxAllowedTimePerGeneration = 3 * 60;
-    [Export] private int fitnessThreshold = 1000; // Score in which to stop training, use int.MaxValue for no limit
+    [Export] private int timeLimit = 10;
+    [Export] private int fitnessThreshold = 4000; // Score in which to stop training, use int.MaxValue for no limit
 
     // Parameters used in library
     public static readonly int AgentCount = 300;
@@ -22,8 +21,8 @@ public partial class TrainingManager : Node
     // Running variables
     public int CurrentGeneration { get; private set; } = 0;
     public int AllTimeBest { get; private set; } = 0;
-    private float totalGenerationTime = 0;
-    private float iterations = 0;
+    private float elapsedTime = 0;
+    private int iterations = 0;
 
     // Constant variables
     public int AgentWidth => (int) camera.GetViewportRect().Size.X;
@@ -34,7 +33,7 @@ public partial class TrainingManager : Node
         timer = GetNode<Timer>("IterationTimer");
         camera = GetNode<Camera2D>("Camera");
 
-        timer.WaitTime = timeLimitPerGeneration;
+        timer.WaitTime = timeLimit;
         timer.Connect(Timer.SignalName.Timeout, new Callable(this, nameof(NextIteration)));
 
         neuralNet.StartTraining();
@@ -44,27 +43,22 @@ public partial class TrainingManager : Node
     public override void _Process(double delta)
     {
         base._Process(delta);
-        totalGenerationTime += (float) delta;
-    }
-
-    public void ExtendTimer()
-    {
-        if (totalGenerationTime >= maxAllowedTimePerGeneration) return;
-        timer.Stop();
-        timer.Start();
+        elapsedTime += (float) delta;
     }
 
     public void NextIteration()
     {
         int bestInGen = neuralNet.StopCurrentLoop();
-        AllTimeBest = bestInGen > AllTimeBest ? bestInGen : AllTimeBest;
+        bool newBest = bestInGen > AllTimeBest;
+        AllTimeBest = newBest ? bestInGen : AllTimeBest;
         if (iterations > trainingLoops || bestInGen > fitnessThreshold)
         {
             EndTraining();
             return;
         }
         iterations++;
-        totalGenerationTime = 0;
+        if (newBest) timeLimit += 3; // Increase time limit if improvement was made
+        elapsedTime = 0;
         neuralNet.StartNextLoop();
     }
 

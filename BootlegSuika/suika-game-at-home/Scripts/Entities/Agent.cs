@@ -4,11 +4,18 @@ using System;
 // Each agent needs to be the entire game scene (no shared map)
 public partial class Agent : GameLoop
 {
+    // Components for library
     public static readonly string Path = "res://Scenes/Prefabs/Agent.tscn";
     public static readonly short NeuralNetInputCount = 7;
     public static readonly short NeuralNetOutputCount = 2;
     [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
     [Export] private RayCast2D ray; // Taken from dropper preview UI raycast
+
+    // Running variables
+    private float lifespan = 10;
+    private float age = 0;
+    private bool InTrainingMode = false;
+
 
     // Functions required for NEAT integration, follows gdscript naming conventions for easier integration
     // Information to feed network with
@@ -71,9 +78,29 @@ public partial class Agent : GameLoop
     }
 
     // METHOD OVERRIDES SECTION
+    public override void _Ready()
+    {
+        base._Ready();
+        if (GetTree().CurrentScene is TrainingManager) InTrainingMode = true;
+        Connect(SignalName.ScoreChange, Callable.From((int score) => age = age - score > 0 ? age - score : 0)); // Scoring extends longevity
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (!InTrainingMode) return;
+        // Put time limit to force evolution instead of passive play
+        age += (float) delta;
+        if (age > lifespan)
+        {
+            EndGame();
+            return;
+        }
+    }
+
     public override void EndGame()
     {
-        base.EndGame();
+        Playing = false;
+        EmitSignal(SignalName.GameOver, Score);
         EmitSignal(SignalName.death);
     }
 }
