@@ -45,6 +45,12 @@ public partial class NEATWrapper
         GA = (GodotObject) GAScript.New(inputCount, outputCount, agentPath, usingGui, customParamName);
     }
 
+    public int GetCurrentBest()
+    {
+        GodotObject genome = (GodotObject) GA.Get("curr_best"); // Genome class, see genome.gd
+        return (int) genome.Get("fitness");
+    }
+
     public Godot.Collections.Array CreateInitialPopulation()
     {
         return (Godot.Collections.Array) GA.Call(initPopulationName);
