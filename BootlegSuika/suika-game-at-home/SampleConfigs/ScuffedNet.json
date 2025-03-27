@@ -1,0 +1,80 @@
+{
+  "activation_func": "tanh_activate",
+  "depth": 1,
+  "links": [
+    {
+      "from": 4,
+      "to": 9,
+      "weight": 0.905062258243561
+    },
+    {
+      "from": 2,
+      "to": 10,
+      "weight": -0.14067508280277
+    },
+    {
+      "from": 2,
+      "to": 9,
+      "weight": -1.25502893328667
+    },
+    {
+      "from": 2,
+      "to": 4,
+      "weight": 0.906715527176857
+    }
+  ],
+  "network_name": "ScuffedNet",
+  "neurons": [
+    {
+      "curve": 3,
+      "id": 1,
+      "type": 1
+    },
+    {
+      "curve": 3,
+      "id": 9,
+      "type": 3
+    },
+    {
+      "curve": 3,
+      "id": 2,
+      "type": 0
+    },
+    {
+      "curve": 3,
+      "id": 3,
+      "type": 0
+    },
+    {
+      "curve": 3.09082482010126,
+      "id": 4,
+      "type": 0
+    },
+    {
+      "curve": 2.92460826784372,
+      "id": 10,
+      "type": 3
+    },
+    {
+      "curve": 3,
+      "id": 5,
+      "type": 0
+    },
+    {
+      "curve": 3.14494541287422,
+      "id": 6,
+      "type": 0
+    },
+    {
+      "curve": 3,
+      "id": 7,
+      "type": 0
+    },
+    {
+      "curve": 3.03662329912186,
+      "id": 8,
+      "type": 0
+    }
+  ],
+  "runtype_active": true
+}
