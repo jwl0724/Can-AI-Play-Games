@@ -7,6 +7,7 @@ public partial class TrainingManager : Node
     [Export] private int trainingLoops = 300;
     [Export] private int timeLimitPerGeneration = 20;
     [Export] private int maxAllowedTimePerGeneration = 3 * 60;
+    [Export] private int fitnessThreshold = 1000; // Score in which to stop training
     [Export] private string pretrainedData; // TODO: Incorporate this later on
 
     // Parameters used in library
@@ -20,8 +21,9 @@ public partial class TrainingManager : Node
 
     // Running variables
     public int CurrentGeneration { get; private set; } = 0;
-    public int BestScoreInGeneration { get; private set; } = 0;
+    public int AllTimeBest { get; private set; } = 0;
     private float totalGenerationTime = 0;
+    private float iterations = 0;
 
     // Constant variables
     public int AgentWidth => (int) camera.GetViewportRect().Size.X;
@@ -33,11 +35,8 @@ public partial class TrainingManager : Node
         camera = GetNode<Camera2D>("Camera");
 
         timer.WaitTime = timeLimitPerGeneration;
-        timer.Connect(Timer.SignalName.Timeout, Callable.From(() => {
-            totalGenerationTime = 0;
-            neuralNet.StartNextGeneration();
-        }));
-        neuralNet.StartTraining(this);
+        timer.Connect(Timer.SignalName.Timeout, new Callable(this, nameof(NextIteration)));
+        neuralNet.StartTraining();
     }
 
     public override void _Process(double delta)
@@ -51,5 +50,25 @@ public partial class TrainingManager : Node
         if (totalGenerationTime >= maxAllowedTimePerGeneration) return;
         timer.Stop();
         timer.Start();
+    }
+
+    public void NextIteration()
+    {
+        int bestInGen = neuralNet.StopCurrentLoop();
+        AllTimeBest = bestInGen > AllTimeBest ? bestInGen : AllTimeBest;
+        if (iterations > trainingLoops || bestInGen > fitnessThreshold)
+        {
+            EndTraining();
+            return;
+        }
+        iterations++;
+        totalGenerationTime = 0;
+        neuralNet.StartNextLoop();
+    }
+
+    private void EndTraining()
+    {
+        // TODO: Figure out how to save training data
+        neuralNet.StopTraining();
     }
 }
