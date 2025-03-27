@@ -6,7 +6,7 @@ public partial class Agent : GameLoop
 {
     // Components for library
     public static readonly string Path = "res://Scenes/Prefabs/Agent.tscn";
-    public static readonly short NeuralNetInputCount = 7;
+    public static readonly short NeuralNetInputCount = 13;
     public static readonly short NeuralNetOutputCount = 2;
     [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
     [Export] private RayCast2D ray; // Taken from dropper preview UI raycast
@@ -16,7 +16,6 @@ public partial class Agent : GameLoop
     private float age = 0;
     private bool InTrainingMode = false;
 
-
     // Functions required for NEAT integration, follows gdscript naming conventions for easier integration
     // Information to feed network with
     public Godot.Collections.Array sense() {
@@ -25,27 +24,35 @@ public partial class Agent : GameLoop
         inputData.Add((int) NextFruit);
 
         // Held fruit -> x, y, fruit type
-        if (Player.HeldFruit == null) {
-            inputData.Add(0); // Play area is 300 to 780 range, so 0, 0 is impossible -> no fruit held
-            inputData.Add(0);
-            inputData.Add(-1); // Enum can't be -1 -> no fruit held
-        } else {
-            inputData.Add(Player.HeldFruit.Position.X);
-            inputData.Add(Player.HeldFruit.Position.Y);
-            inputData.Add((int) Player.HeldFruit.Type);
-        }
+        AppendWithNullCheck(inputData, Player.HeldFruit);
+
         // Targetted fruit -> x, y, fruit type
         Fruit targettedFruit = GetTargettedFruit();
-        if (targettedFruit == null) {
-            inputData.Add(0);
-            inputData.Add(0);
-            inputData.Add(-1);
-        } else {
-            inputData.Add(targettedFruit.Position.X);
-            inputData.Add(targettedFruit.Position.Y);
-            inputData.Add((int) targettedFruit.Type);
-        }
+        AppendWithNullCheck(inputData, targettedFruit);
 
+        // First same type fruit as held -> x, y, fruit type
+        Fruit firstSameTypeHeld = null;
+        foreach(Fruit fruit in FruitContainer.GetChildren())
+        {
+            if (fruit.Type == Player.HeldFruit?.Type)
+            {
+                firstSameTypeHeld = fruit;
+                break;
+            }
+        }
+        AppendWithNullCheck(inputData, firstSameTypeHeld);
+
+        // First same type fruit as next -> x, y, fruit type
+        Fruit firstSameTypeNext = null;
+        foreach(Fruit fruit in FruitContainer.GetChildren())
+        {
+            if (fruit.Type == NextFruit)
+            {
+                firstSameTypeNext = fruit;
+                break;
+            }
+        }
+        AppendWithNullCheck(inputData, firstSameTypeNext);
         return inputData;
     }
 
@@ -60,10 +67,28 @@ public partial class Agent : GameLoop
         return Score;
     }
 
+    // HELPER FUNCTIONS SECTION
     private Fruit GetTargettedFruit() {
         GodotObject collider = ray.GetCollider();
         if (collider is not Fruit fruit) return null;
         else return fruit;
+    }
+
+    // Data in x, y, type order
+    private static void AppendWithNullCheck(Godot.Collections.Array data, Fruit fruit)
+    {
+        if (fruit == null)
+        {
+            data.Add(0); // Values are out of bounds of play area
+            data.Add(0);
+            data.Add(-1);
+        }
+        else
+        {
+            data.Add(fruit.Position.X);
+            data.Add(fruit.Position.Y);
+            data.Add((int) fruit.Type);
+        }
     }
 
     // SPECIAL METHODS OF AGENT
