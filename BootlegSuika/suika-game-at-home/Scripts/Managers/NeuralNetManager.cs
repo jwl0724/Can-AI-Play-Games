@@ -19,7 +19,7 @@ public partial class NeuralNetManager : Node
         foreach(Agent agent in agents)
         {
             agent.Connect(Agent.SignalName.ScoreChange, Callable.From(() => manager.ExtendTimer()));
-            agent.DisablePlayerInput(true);
+            agent.CallDeferred(nameof(agent.DisablePlayerInput));
         }
         PlaceBodies(agents);
     }
