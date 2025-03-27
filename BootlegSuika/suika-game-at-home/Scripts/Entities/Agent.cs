@@ -59,6 +59,12 @@ public partial class Agent : GameLoop
         else return fruit;
     }
 
+    // SPECIAL METHODS OF AGENT
+	public void DisablePlayerInput()
+	{
+        Player.DisablePlayerInput(true);
+	}
+
     // METHOD OVERRIDES SECTION
     public override void EndGame()
     {

@@ -35,12 +35,6 @@ public partial class GameLoop : Node2D
 		return FruitContainer.GetFruitsInBox();
 	}
 
-	// Only called in the training scene
-	public void DisablePlayerInput(bool disabled)
-	{
-		Player.DisablePlayerInput(disabled);
-	}
-
 	public void AddScore(int score)
 	{
 		Score += score;
