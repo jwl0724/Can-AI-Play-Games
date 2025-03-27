@@ -50,8 +50,13 @@ public partial class NeuralNetManager : Node
 
     public void StopTraining()
     {
-        // TODO: Figure out how to save net
         IsTraining = false;
+        GD.Print("--- TRAINING COMPLETE ---");
+        neat.PrintStatus();
+        GD.Print($"--- Saving Network As ${manager.NetworkName} ---");
+
+        // Saves to C:\Users\YourName\AppData\Roaming\Godot\app_userdata\YourProject\network_configs
+        neat.SaveNetworkToJson(manager.NetworkName);
     }
 
     public int StopCurrentLoop()
@@ -78,7 +83,7 @@ public partial class NeuralNetManager : Node
 
     private void PlaceBodies(Godot.Collections.Array bodies)
     {
-        foreach(Player body in gameScenes.GetChildren())
+        foreach(Agent body in gameScenes.GetChildren())
         {
             body.QueueFree();
         }

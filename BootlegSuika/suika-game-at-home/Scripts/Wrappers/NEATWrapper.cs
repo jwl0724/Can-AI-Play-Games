@@ -33,6 +33,8 @@ public partial class NEATWrapper
     private static readonly StringName printStatusName = "print_status";
     // (index) -> void
     private static readonly StringName updateVisibilityName = "update_visibility";
+    // (string) -> void
+    private static readonly StringName saveName = "save_to_json";
 
     public NEATWrapper(
         int inputCount,
@@ -49,6 +51,14 @@ public partial class NEATWrapper
     {
         GodotObject genome = (GodotObject) GA.Get("curr_best"); // Genome class, see genome.gd
         return (int) genome.Get("fitness");
+    }
+
+    public void SaveNetworkToJson(string configName)
+    {
+        var genome =  (GodotObject) GA.Get("curr_best");
+        var agent = (GodotObject) genome.Get("agent");
+        var network = (GodotObject) agent.Get("network");
+        network.Call(saveName, configName);
     }
 
     public Godot.Collections.Array CreateInitialPopulation()
