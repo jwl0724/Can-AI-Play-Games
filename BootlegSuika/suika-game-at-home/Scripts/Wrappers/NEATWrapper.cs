@@ -5,7 +5,7 @@ public partial class NEATWrapper
 {
     // Neural Net scripts
     private static readonly GDScript GAScript = GD.Load<GDScript>("res://Addons/Neat/NEAT_code/ga.gd");
-    private readonly GodotObject GA;
+    public readonly Node GA;
 
     // () -> Array
     private static readonly StringName initPopulationName = "create_initial_population";
@@ -42,7 +42,7 @@ public partial class NEATWrapper
         string customParamName = "Default")
     {
         // (input num, output num, body path, use gui?, param name?) -> void
-        GA = (GodotObject) GAScript.New(inputCount, outputCount, agentPath, usingGui, customParamName);
+        GA = (Node) GAScript.New(inputCount, outputCount, agentPath, usingGui, customParamName);
     }
 
     public int GetCurrentBest()

@@ -4,7 +4,7 @@ using System;
 public partial class NeuralNetManager : Node
 {
     // Constants
-    private readonly float timeStepInterval = 0.5f;
+    private readonly float timeStepInterval = 0.01f;
 
     // Components
     [Export] private Node gameScenes; // Node where agents are placed
@@ -19,6 +19,7 @@ public partial class NeuralNetManager : Node
     {
         neat = new NEATWrapper(Agent.NeuralNetInputCount, Agent.NeuralNetOutputCount, Agent.Path, false);
         manager = Owner as TrainingManager;
+        AddChild(neat.GA);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -40,7 +41,7 @@ public partial class NeuralNetManager : Node
         Godot.Collections.Array agents = neat.GetCurrentBodies();
         foreach(Agent agent in agents)
         {
-            agent.Connect(Agent.SignalName.ScoreChange, Callable.From(() => manager.ExtendTimer()));
+            agent.Connect(Agent.SignalName.ScoreChange, Callable.From((int score) => manager.ExtendTimer()));
             agent.CallDeferred(nameof(agent.DisablePlayerInput));
         }
         PlaceBodies(agents);
