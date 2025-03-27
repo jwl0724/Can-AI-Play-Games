@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="Suika Game at Home"
-run/main_scene="res://Scenes/Levels/Level.tscn"
+run/main_scene="res://Scenes/Levels/TrainingScene.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameLoop="*res://Scripts/GameLoop.cs"
+Params="*res://Addons/Neat/NEAT_code/params.gd"
+Utils="*res://Addons/Neat/NEAT_code/utils.gd"
+Innovations="*res://Addons/Neat/NEAT_code/innovations.gd"
 
 [display]
 

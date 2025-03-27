@@ -14,8 +14,9 @@ public partial class LosePlaneManager : Node2D
 
     private void OnBodyEntered(Node2D body)
     {
-        if (body is not Fruit fruit || !GameLoop.Instance.Playing) return;
+        GameLoop game = Owner as GameLoop;
+        if (body is not Fruit fruit || !game.Playing) return;
         fruit.InBounds = false;
-        GameLoop.Instance.EndGame();
+        game.EndGame();
     }
 }

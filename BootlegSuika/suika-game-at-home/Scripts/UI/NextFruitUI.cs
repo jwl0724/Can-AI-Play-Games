@@ -8,7 +8,7 @@ public partial class NextFruitUI : Control
 
     public override void _Ready()
     {
-        GameLoop.Instance.Connect(GameLoop.SignalName.NextFruitPicked, Callable.From((int fruitType) => OnFruitPicked((FruitType) fruitType)));
+        (Owner as GameLoop).Connect(GameLoop.SignalName.NextFruitPicked, Callable.From((int fruitType) => OnFruitPicked((FruitType) fruitType)));
     }
 
     private void OnFruitPicked(FruitType type)

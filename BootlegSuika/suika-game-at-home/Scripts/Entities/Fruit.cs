@@ -94,7 +94,9 @@ public partial class Fruit : RigidBody2D
 
 	private bool Fuse(Fruit otherFruit)
 	{
-		if (Type != otherFruit.Type || Type == FruitType.WATERMELON || IsQueuedForDeletion() || !GameLoop.Instance.Playing)
+		Box container = GetParent<Box>();
+
+		if (Type != otherFruit.Type || Type == FruitType.WATERMELON || IsQueuedForDeletion() || !container.AllowFusion)
 			return false;
 
 		// Spawn new fruit between the two fruits
@@ -103,7 +105,7 @@ public partial class Fruit : RigidBody2D
 
 		// Emit signal for first collision if other fruit has not collided yet
 		if (otherFruit.Collided == false) otherFruit.EmitSignal(SignalName.FirstCollision);
-		GameLoop.Instance.AddScore(scoreAmount);
+		container.AddScore(scoreAmount);
 
 		// Delete fruits involved in fusion
 		otherFruit.QueueFree();

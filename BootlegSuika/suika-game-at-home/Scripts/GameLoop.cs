@@ -1,12 +1,8 @@
 using Godot;
 using System;
 
-// TODO: Add menu for it + retry button for game over
-public partial class GameLoop : Node
+public partial class GameLoop : Node2D
 {
-	// Singleton
-	public static GameLoop Instance { get; private set; }
-
 	// Components (Need the components to set themselves since this loads way before them)
 	public Player Player { get; private set; }
 	public Box FruitContainer { get; private set; }
@@ -16,33 +12,27 @@ public partial class GameLoop : Node
 	[Signal] public delegate void ScoreChangeEventHandler(int score);
 	[Signal] public delegate void NextFruitPickedEventHandler(int fruitType); // Expected to typecast back to FruitType
 	[Signal] public delegate void GameOverEventHandler(int score);
+	[Signal] public delegate void GameStartEventHandler();
 	[Signal] public delegate void PauseStateChangeEventHandler(bool paused);
-	[Signal] public delegate void ComponentConnectedEventHandler(Node component);
 
 	// Running variables
-	public Vector2 BoxBorders { get; private set; } = new Vector2(265, 795);
+	public Vector2 BoxBorders { get; protected set; } = new Vector2(265, 795);
 	public bool Paused { get; private set; } = false;
-	public bool Playing { get; private set; } = false;
+	public bool Playing { get; protected set; } = false;
 	public int Score { get; private set; } = 0;
 	public FruitType NextFruit { get; private set; }
 	public Fruit CurrentFruit { get; private set; } = null;
 
 	public override void _Ready()
 	{
-		Instance ??= this;
-
-		// TODO: OH GOD FIND A WAY TO WAIT FOR EVERYTHING TO LOAD, THIS IS GENUINELY AWFUL
-		Connect(SignalName.ComponentConnected, Callable.From((Node component) => {
-			if (Player != null && FruitContainer != null && Builder != null) StartGame();
-		}));
+		FruitContainer = GetNode<Box>("Box");
+		Builder = GetNode<FruitBuilder>("Managers/FruitBuilder");
+		Player = GetNode<Player>("Player");
+		StartGame();
 	}
 
-	public void SetComponent(Node component)
-	{
-		if (component is Player player) Player = player;
-		else if (component is Box box) FruitContainer = box;
-		else if (component is FruitBuilder builder) Builder = builder;
-		EmitSignal(SignalName.ComponentConnected, component);
+	public Godot.Collections.Array<Fruit> GetContainerFruits() {
+		return FruitContainer.GetFruitsInBox();
 	}
 
 	public void AddScore(int score)
@@ -79,10 +69,11 @@ public partial class GameLoop : Node
 		EmitSignal(SignalName.NextFruitPicked, (int) NextFruit);
 	}
 
-	public void EndGame()
+	public virtual void EndGame()
 	{
-		EmitSignal(SignalName.GameOver, Score);
 		Playing = false;
+		FruitContainer.ExplodeFruits();
+		EmitSignal(SignalName.GameOver, Score);
 	}
 
 	// Resets the game to beginning state
@@ -101,5 +92,6 @@ public partial class GameLoop : Node
 		CurrentFruit = null;
 		ChooseNextFruit();
 		SpawnFruit();
+		EmitSignal(SignalName.GameStart);
 	}
 }

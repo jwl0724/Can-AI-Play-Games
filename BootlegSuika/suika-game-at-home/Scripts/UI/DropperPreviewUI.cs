@@ -14,7 +14,7 @@ public partial class DropperPreviewUI : Line2D
 	public override void _PhysicsProcess(double delta)
 	{
 		Visible = false; // Hide the line by default
-		if (!GameLoop.Instance.Playing || !player.IsHoldingFruit) return;
+		if (player.InputDisabled || !player.IsHoldingFruit) return;
 		CreateLine();
 	}
 

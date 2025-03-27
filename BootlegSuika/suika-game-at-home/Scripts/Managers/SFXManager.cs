@@ -12,9 +12,10 @@ public partial class SFXManager : Node
         drop = GetNode<AudioStreamPlayer>("Drop");
         fuse = GetNode<AudioStreamPlayer>("Fuse");
 
-        GameLoop.Instance.Connect(GameLoop.SignalName.ScoreChange, Callable.From((int score) => OnFuse()));
-        GameLoop.Instance.Connect(GameLoop.SignalName.ComponentConnected, Callable.From((Node component) => {
-            if (component is Player) GameLoop.Instance.Player.Connect(Player.SignalName.DropFruit, Callable.From(() => OnDrop()));
+        GameLoop game = Owner as GameLoop;
+        game.Connect(GameLoop.SignalName.ScoreChange, Callable.From((int score) => OnFuse()));
+        game.Connect(Node.SignalName.Ready, Callable.From(() => {
+            game.Player.Connect(Player.SignalName.DropFruit, new Callable(this, nameof(OnDrop)));
         }));
     }
 
