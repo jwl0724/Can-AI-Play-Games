@@ -107,7 +107,7 @@ public partial class Agent : GameLoop
     {
         base._Ready();
         if (GetTree().CurrentScene is TrainingManager) InTrainingMode = true;
-        Connect(SignalName.ScoreChange, Callable.From((int score) => age = age - score > 0 ? age - score : 0)); // Scoring extends longevity
+        Connect(SignalName.ScoreChange, Callable.From((int score) => age = age - score / 2 > 0 ? age - score / 2: 0)); // Scoring extends longevity
     }
 
     public override void _PhysicsProcess(double delta)
