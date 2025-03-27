@@ -39,12 +39,12 @@ public partial class NEATWrapper
     public NEATWrapper(
         int inputCount,
         int outputCount,
+        int agentCount,
         string agentPath,
         bool usingGui,
         string customParamName = "Default")
     {
-        // (input num, output num, body path, use gui?, param name?) -> void
-        GA = (Node) GAScript.New(inputCount, outputCount, agentPath, usingGui, customParamName);
+        GA = (Node) GAScript.New(inputCount, outputCount, agentCount, agentPath, usingGui, customParamName);
     }
 
     public int GetCurrentBest()
