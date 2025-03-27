@@ -52,7 +52,7 @@ public partial class NeuralNetManager : Node
         IsTraining = false;
         GD.Print("--- TRAINING COMPLETE ---");
         neat.PrintStatus();
-        GD.Print($"--- Saving Network As ${manager.NetworkName} ---");
+        GD.Print($"--- Saving Network As {manager.NetworkName} ---");
 
         // Saves to C:\Users\YourName\AppData\Roaming\Godot\app_userdata\YourProject\network_configs
         neat.SaveNetworkToJson(manager.NetworkName);
