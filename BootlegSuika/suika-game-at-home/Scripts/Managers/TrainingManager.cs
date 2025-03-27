@@ -4,11 +4,11 @@ using System;
 public partial class TrainingManager : Node
 {
     // Training parameters
+    [Export] public string NetworkName { get; private set; } = "GamerAI"; // Saved network name
     [Export] private int trainingLoops = 300;
     [Export] private int timeLimitPerGeneration = 20;
     [Export] private int maxAllowedTimePerGeneration = 3 * 60;
-    [Export] private int fitnessThreshold = 1000; // Score in which to stop training
-    [Export] private string pretrainedData; // TODO: Incorporate this later on
+    [Export] private int fitnessThreshold = 1000; // Score in which to stop training, use int.MaxValue for no limit
 
     // Parameters used in library
     public static readonly int AgentCount = 300;
@@ -36,6 +36,7 @@ public partial class TrainingManager : Node
 
         timer.WaitTime = timeLimitPerGeneration;
         timer.Connect(Timer.SignalName.Timeout, new Callable(this, nameof(NextIteration)));
+
         neuralNet.StartTraining();
         timer.Start();
     }
@@ -69,8 +70,8 @@ public partial class TrainingManager : Node
 
     private void EndTraining()
     {
-        // TODO: Figure out how to save training data
         timer.Stop();
         neuralNet.StopTraining();
+        GetTree().Quit(); // Closes game when threshold is hit
     }
 }
