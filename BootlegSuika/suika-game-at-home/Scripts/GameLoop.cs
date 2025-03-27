@@ -18,7 +18,7 @@ public partial class GameLoop : Node2D
 	// Running variables
 	public Vector2 BoxBorders { get; protected set; } = new Vector2(265, 795);
 	public bool Paused { get; private set; } = false;
-	public bool Playing { get; private set; } = false;
+	public bool Playing { get; protected set; } = false;
 	public int Score { get; private set; } = 0;
 	public FruitType NextFruit { get; private set; }
 	public Fruit CurrentFruit { get; private set; } = null;
@@ -71,8 +71,9 @@ public partial class GameLoop : Node2D
 
 	public virtual void EndGame()
 	{
-		EmitSignal(SignalName.GameOver, Score);
 		Playing = false;
+		FruitContainer.ExplodeFruits();
+		EmitSignal(SignalName.GameOver, Score);
 	}
 
 	// Resets the game to beginning state

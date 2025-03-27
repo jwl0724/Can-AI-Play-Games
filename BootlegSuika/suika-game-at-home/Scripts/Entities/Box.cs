@@ -6,12 +6,6 @@ public partial class Box : Node
 {
 	public bool AllowFusion => (Owner as GameLoop).Playing;
 
-	public override void _Ready()
-	{
-		GameLoop game = Owner as GameLoop;
-		game.Connect(GameLoop.SignalName.GameOver, Callable.From((int score) => OnGameOver()));
-	}
-
 	public void Reset()
 	{
 		foreach(Node child in GetChildren()) child.QueueFree();
@@ -33,7 +27,7 @@ public partial class Box : Node
 	}
 
 	// Sends fruit flying out of box when game over
-	private void OnGameOver()
+	public void ExplodeFruits()
 	{
 		foreach(Fruit fruit in GetChildren().Cast<Fruit>())
 		{
