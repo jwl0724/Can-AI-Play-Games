@@ -39,6 +39,10 @@ public partial class NeuralNetManager : Node
         {
             Agent body = (Agent) bodies[i];
             body.Position = new Vector2(manager.AgentWidth * i, 0);
+            body.SetBorders(
+                (int) body.BoxBorders.X + manager.AgentWidth * i,
+                (int) body.BoxBorders.Y + manager.AgentWidth * i
+            );
             gameScenes.AddChild(body);
         }
     }

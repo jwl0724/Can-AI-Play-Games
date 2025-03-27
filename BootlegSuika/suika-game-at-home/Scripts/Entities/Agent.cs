@@ -65,6 +65,11 @@ public partial class Agent : GameLoop
         Player.DisablePlayerInput(true);
 	}
 
+    public void SetBorders(int lower, int upper)
+    {
+        BoxBorders = new Vector2(lower, upper);
+    }
+
     // METHOD OVERRIDES SECTION
     public override void EndGame()
     {
