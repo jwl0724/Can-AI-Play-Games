@@ -4,7 +4,7 @@ using System;
 public partial class NeuralNetManager : Node
 {
     // Constants
-    private readonly float timeStepInterval = 0.01f;
+    private readonly float timeStepInterval = 0.25f;
 
     // Components
     [Export] private Node gameScenes; // Node where agents are placed
