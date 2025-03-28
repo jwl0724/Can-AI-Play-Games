@@ -1,5 +1,5 @@
 # Can-AI-Play-Games
-A neural network to see how good AI can get at playing a simple game
+A neural network to see how good AI can get at playing a simple game. If you would like to play the simple game directly you can download the game here: https://drive.google.com/file/d/1BwbQNVippF8s6juWKaFZ3OhgXXFCHCnp/view
 
 The neural net was created by pastra98 and can be found here https://github.com/pastra98/NEAT_for_Godot
 
