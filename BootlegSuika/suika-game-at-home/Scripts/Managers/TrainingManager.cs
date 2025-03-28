@@ -24,7 +24,6 @@ public partial class TrainingManager : Node
     // Running variables
     public int CurrentGeneration { get; private set; } = 0;
     public int AllTimeBest { get; private set; } = 0;
-    private float elapsedTime = 0;
     private int iterations = 0;
 
     // Constant variables
@@ -43,12 +42,6 @@ public partial class TrainingManager : Node
         timer.Start();
     }
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-        elapsedTime += (float) delta;
-    }
-
     public void NextIteration()
     {
         int bestInGen = neuralNet.StopCurrentLoop();
@@ -59,16 +52,20 @@ public partial class TrainingManager : Node
             EndTraining();
             return;
         }
+        GD.Print($"--- MOVING TO NEXT GENERATION {CurrentGeneration}---");
+        CurrentGeneration++;
         iterations++;
+
         if (newBest)
         {
+            GD.Print($"--- NEW BEST FOUND WITH FITNESS: {AllTimeBest} ---");
             // Set the new time limit and reset the timer
             timeLimit += rewardAmount; // Increase time limit if improvement was made
             timer.WaitTime = timeLimit;
-            timer.Stop();
-            timer.Start();
         }
-        elapsedTime = 0;
+        // Restart timer
+        timer.Stop();
+        timer.Start();
         neuralNet.StartNextLoop();
     }
 
