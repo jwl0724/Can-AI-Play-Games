@@ -6,13 +6,14 @@ public partial class Agent : GameLoop
 {
     // Components for library
     public static readonly string Path = "res://Scenes/Prefabs/Agent.tscn";
-    public static readonly short NeuralNetInputCount = 13;
+    public static readonly short NeuralNetInputCount = 13; // 13
     public static readonly short NeuralNetOutputCount = 2;
     [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
     [Export] private RayCast2D ray; // Taken from dropper preview UI raycast
 
     // Running variables
     private float lifespan = 10;
+    private float timeAlive = 0;
     private float age = 0;
     private bool InTrainingMode = false;
 
@@ -24,47 +25,72 @@ public partial class Agent : GameLoop
         inputData.Add((int) NextFruit);
 
         // Held fruit -> x, y, fruit type
-        AppendWithNullCheck(inputData, Player.HeldFruit);
+        inputData.Add(Player.Position.X);
+        // AppendWithNullCheck(inputData, Player.HeldFruit);
 
         // Targetted fruit -> x, y, fruit type
         Fruit targettedFruit = GetTargettedFruit();
-        AppendWithNullCheck(inputData, targettedFruit);
+        if (targettedFruit != null) inputData.Add((int) targettedFruit.Type);
+        else inputData.Add(0); // Values are out of bounds of play area
+        // AppendWithNullCheck(inputData, targettedFruit);
 
-        // First same type fruit as held -> x, y, fruit type
-        Fruit firstSameTypeHeld = null;
-        foreach(Fruit fruit in FruitContainer.GetChildren())
+        if (Player.HeldFruit == null)
         {
-            if (fruit.Type == Player.HeldFruit?.Type)
-            {
-                firstSameTypeHeld = fruit;
-                break;
-            }
-        }
-        AppendWithNullCheck(inputData, firstSameTypeHeld);
+            float distanceFromTarget = ray.GetCollisionPoint().DistanceTo(Player.GetFruitSpawnPoint());
+            inputData.Add(distanceFromTarget);
+        } else inputData.Add(-1000); // Some impossible value
 
-        // First same type fruit as next -> x, y, fruit type
-        Fruit firstSameTypeNext = null;
-        foreach(Fruit fruit in FruitContainer.GetChildren())
-        {
-            if (fruit.Type == NextFruit)
-            {
-                firstSameTypeNext = fruit;
-                break;
-            }
-        }
-        AppendWithNullCheck(inputData, firstSameTypeNext);
+        float distanceFromLeft = Player.GlobalPosition.X - BoxBorders.X;
+        float distanceFromRight = BoxBorders.Y - Player.GlobalPosition.X;
+        inputData.Add(distanceFromLeft);
+        inputData.Add(distanceFromRight);
+
+        // // First same type fruit as held -> x, y, fruit type
+        // Fruit firstSameTypeHeld = null;
+        // foreach(Fruit fruit in FruitContainer.GetChildren())
+        // {
+        //     if (fruit.Type == Player.HeldFruit?.Type)
+        //     {
+        //         firstSameTypeHeld = fruit;
+        //         break;
+        //     }
+        // }
+        // AppendWithNullCheck(inputData, firstSameTypeHeld);
+
+        // // First same type fruit as next -> x, y, fruit type
+        // Fruit firstSameTypeNext = null;
+        // foreach(Fruit fruit in FruitContainer.GetChildren())
+        // {
+        //     if (fruit.Type == NextFruit)
+        //     {
+        //         firstSameTypeNext = fruit;
+        //         break;
+        //     }
+        // }
+        // AppendWithNullCheck(inputData, firstSameTypeNext);
         return inputData;
     }
 
     // Output action to act with
     public void act(Godot.Collections.Array<float> networkOutput) {
-        if (networkOutput[0] > 0.5f) Player.DropHeldFruit();
-        if (networkOutput[1] < -0.5f) Player.Move(-1, GetProcessDeltaTime());
-        if (networkOutput[1] > 0.5f) Player.Move(1, GetProcessDeltaTime());
+        if (networkOutput[0] > -0.5) Player.DropHeldFruit();
+
+        if (Player.HeldFruit == null) return;
+        float moveCoefficient = networkOutput[1];
+
+        float offset = Player.GlobalPosition.X - Player.GetFruitSpawnPoint().X;
+        float boxWidth = BoxBorders.Y - BoxBorders.X;
+        float midpoint = boxWidth / 2 + BoxBorders.X;
+        float newX = midpoint + boxWidth / 2 * moveCoefficient;
+
+        if (newX <= midpoint) newX += Player.HeldFruit.Radius;
+        else newX -= Player.HeldFruit.Radius;
+
+        Player.GlobalPosition = new Vector2(newX + offset, Player.GlobalPosition.Y);
     }
 
-    public int get_fitness() {
-        return Score;
+    public float get_fitness() {
+        return Score * timeAlive / 60;
     }
 
     // HELPER FUNCTIONS SECTION
@@ -80,13 +106,13 @@ public partial class Agent : GameLoop
         if (fruit == null)
         {
             data.Add(0); // Values are out of bounds of play area
-            data.Add(0);
+            // data.Add(0);
             data.Add(-1);
         }
         else
         {
             data.Add(fruit.Position.X);
-            data.Add(fruit.Position.Y);
+            // data.Add(fruit.Position.Y);
             data.Add((int) fruit.Type);
         }
     }
@@ -107,7 +133,7 @@ public partial class Agent : GameLoop
     {
         base._Ready();
         if (GetTree().CurrentScene is TrainingManager) InTrainingMode = true;
-        Connect(SignalName.ScoreChange, Callable.From((int score) => age = age - score / 2 > 0 ? age - score / 2: 0)); // Scoring extends longevity
+        Connect(SignalName.ScoreChange, new Callable(this, nameof(Reward)));
     }
 
     public override void _PhysicsProcess(double delta)
@@ -115,6 +141,7 @@ public partial class Agent : GameLoop
         if (!InTrainingMode) return;
         // Put time limit to force evolution instead of passive play
         age += (float) delta;
+        timeAlive += (float) delta;
         if (age > lifespan)
         {
             EndGame();
@@ -125,7 +152,17 @@ public partial class Agent : GameLoop
     public override void EndGame()
     {
         Playing = false;
+        Visible = false;
+        InTrainingMode = false;
         EmitSignal(SignalName.GameOver, Score);
+        Score /= 1000; // Make fitness very low if agent died
         EmitSignal(SignalName.death);
+    }
+
+    // Reward function for scoring
+    private void Reward(int score)
+    {
+        float timerReduction = score / 2;
+        age = age - timerReduction > 0 ? timerReduction : 0;
     }
 }
