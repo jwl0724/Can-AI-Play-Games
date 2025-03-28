@@ -17,8 +17,9 @@ public partial class NeuralNetManager : Node
 
     public override void _Ready()
     {
-        neat = new NEATWrapper(Agent.NeuralNetInputCount, Agent.NeuralNetOutputCount, Agent.Path, false);
         manager = Owner as TrainingManager;
+        neat = new NEATWrapper(Agent.NeuralNetInputCount, Agent.NeuralNetOutputCount, manager.AgentCount, Agent.Path, false, manager.NetConfigName);
+        GD.Print($"--- STARTING TRAINING FOR {neat.GetCurrentBodies().Count} AGENTS ---");
         AddChild(neat.GA);
     }
 
@@ -52,7 +53,7 @@ public partial class NeuralNetManager : Node
         IsTraining = false;
         GD.Print("--- TRAINING COMPLETE ---");
         neat.PrintStatus();
-        GD.Print($"--- Saving Network As ${manager.NetworkName} ---");
+        GD.Print($"--- Saving Network As {manager.NetworkName} ---");
 
         // Saves to C:\Users\YourName\AppData\Roaming\Godot\app_userdata\YourProject\network_configs
         neat.SaveNetworkToJson(manager.NetworkName);

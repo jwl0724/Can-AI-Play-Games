@@ -50,6 +50,7 @@ var curr_visibility = Params.default_visibility
 
 func _init(number_inputs: int,
            number_outputs: int,
+           number_agents: int,
            body_path: String,
            use_gui = true,
            custom_params_name = "Default") -> void:
@@ -67,6 +68,7 @@ func _init(number_inputs: int,
     Params.num_outputs = number_outputs
     Params.agent_body_path = body_path
     Params.use_gui = use_gui
+    Params.population_size = number_agents
     # create a new population of genomes
     curr_genomes = create_initial_population()
     # add the gui node as child
@@ -121,7 +123,7 @@ func create_initial_population() -> Array:
         # Every genome gets a new set of neurons and random connections
         var links = {}; var neurons = {}
         # copy every input and output neuron for a new genome
-        for neuron_id in all_neurons.keys(): 
+        for neuron_id in all_neurons.keys():
             neurons[neuron_id] = all_neurons[neuron_id].copy()
         # count how many links are added
         var links_added = 0
@@ -160,7 +162,7 @@ func create_initial_population() -> Array:
     best_species = Utils.random_choice(curr_species)
     # let ui know that it should update the species list
     emit_signal("made_new_gen")
-    # return all new genomes 
+    # return all new genomes
     return initial_genomes
 
 
@@ -342,7 +344,7 @@ func update_curr_species() -> Array:
             updated_species.append(species)
             # collect the average fitness, and the adjusted average fitness
             total_species_avg_fitness += species.avg_fitness
-            total_adjusted_species_avg_fitness += species.avg_fitness_adjusted 
+            total_adjusted_species_avg_fitness += species.avg_fitness_adjusted
             # update curr_best genome and possibly all_time_best genome
             if species.leader.fitness > curr_best.fitness:
                 if species.leader.fitness > all_time_best.fitness:
@@ -397,7 +399,7 @@ func make_hybrids(num_to_spawn: int) -> Array:
             curr_agents.append(baby.generate_agent())
             hybrids.append(baby)
         # go to next species
-        species_index += 1 
+        species_index += 1
         # if we went through every species, but still have spawns, go again
         if species_index == curr_species.size() - 2:
             species_index = 0

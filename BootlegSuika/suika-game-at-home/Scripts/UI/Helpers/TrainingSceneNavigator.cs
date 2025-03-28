@@ -4,10 +4,15 @@ using System;
 public partial class TrainingSceneNavigator : Camera2D
 {
 	private enum Direction { LEFT, RIGHT }
+	private TrainingManager manager;
+
+	// Running variables
+	private bool IsTranisitioning = false;
 
 	public override void _Ready()
 	{
 		Offset = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2);
+		manager = Owner as TrainingManager;
 	}
 
 	public override void _Input(InputEvent inputEvent)
@@ -19,8 +24,19 @@ public partial class TrainingSceneNavigator : Camera2D
 
 	private void ShowNextAgent(Direction direction)
 	{
+		if (IsTranisitioning) return;
+
 		if (Position.X == 0 && direction == Direction.LEFT) return;
-		else if (Position.X == GetViewportRect().Size.X * (TrainingManager.AgentCount - 1) && direction == Direction.RIGHT) return;
-		else Position += direction == Direction.LEFT ? Vector2.Left * GetViewportRect().Size.X : Vector2.Right * GetViewportRect().Size.X;
+		else if (Position.X == GetViewportRect().Size.X * (manager.AgentCount - 1) && direction == Direction.RIGHT) return;
+
+		IsTranisitioning = true;
+		Vector2 newPosition;
+		if (direction == Direction.LEFT) newPosition = Position + Vector2.Left * GetViewportRect().Size.X;
+		else newPosition = Position + Vector2.Right * GetViewportRect().Size.X;
+
+		Tween tween = CreateTween();
+		tween.TweenProperty(this, nameof(Position).ToLower(), newPosition, 0.1f);
+		tween.TweenCallback(Callable.From(() => IsTranisitioning = false));
+		tween.Play();
 	}
 }

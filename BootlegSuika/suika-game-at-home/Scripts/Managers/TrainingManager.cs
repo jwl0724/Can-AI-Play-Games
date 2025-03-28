@@ -7,10 +7,13 @@ public partial class TrainingManager : Node
     [Export] public string NetworkName { get; private set; } = "GamerAI"; // Saved network name
     [Export] private int trainingLoops = 300;
     [Export] private int timeLimit = 10;
+    [Export] private int rewardAmount = 5; // Amount of time given when improved
     [Export] private int fitnessThreshold = 4000; // Score in which to stop training, use int.MaxValue for no limit
+    // Found in C://Users/YourName/AppData/Roaming/Godot/app_userdata/Suika Game at Home/network_configs -> name should match config file to load without extension
+    [Export] public string NetConfigName = "Default";
 
     // Parameters used in library
-    public static readonly int AgentCount = 300;
+    [Export] public int AgentCount = 300;
 
     // Components
     private Timer timer;
@@ -57,7 +60,7 @@ public partial class TrainingManager : Node
             return;
         }
         iterations++;
-        if (newBest) timeLimit += 3; // Increase time limit if improvement was made
+        if (newBest) timeLimit += rewardAmount; // Increase time limit if improvement was made
         elapsedTime = 0;
         neuralNet.StartNextLoop();
     }
