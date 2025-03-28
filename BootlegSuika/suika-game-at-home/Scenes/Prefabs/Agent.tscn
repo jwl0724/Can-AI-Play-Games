@@ -89,17 +89,18 @@ position = Vector2(-2, 19)
 shape = SubResource("RectangleShape2D_4d1w0")
 
 [node name="LosePlane" type="Node2D" parent="."]
+position = Vector2(0, 77)
 script = ExtResource("12_w3a22")
 
 [node name="Left" type="Area2D" parent="LosePlane"]
-position = Vector2(45, 398)
+position = Vector2(4, 398)
 monitorable = false
 
 [node name="Shape" type="CollisionShape2D" parent="LosePlane/Left"]
 shape = SubResource("RectangleShape2D_vx74o")
 
 [node name="Right" type="Area2D" parent="LosePlane"]
-position = Vector2(1016, 398)
+position = Vector2(1055, 398)
 monitorable = false
 
 [node name="Shape" type="CollisionShape2D" parent="LosePlane/Right"]
