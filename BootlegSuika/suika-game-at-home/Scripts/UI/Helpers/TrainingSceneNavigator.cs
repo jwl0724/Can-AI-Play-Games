@@ -27,12 +27,12 @@ public partial class TrainingSceneNavigator : Camera2D
 		if (IsTranisitioning) return;
 
 		if (Position.X == 0 && direction == Direction.LEFT) return;
-		else if (Position.X == GetViewportRect().Size.X * (manager.AgentCount - 1) && direction == Direction.RIGHT) return;
+		else if (Position.X == (GetViewportRect().Size.X + 250) * (manager.AgentCount - 1) && direction == Direction.RIGHT) return;
 
 		IsTranisitioning = true;
 		Vector2 newPosition;
-		if (direction == Direction.LEFT) newPosition = Position + Vector2.Left * GetViewportRect().Size.X;
-		else newPosition = Position + Vector2.Right * GetViewportRect().Size.X;
+		if (direction == Direction.LEFT) newPosition = Position + Vector2.Left * (GetViewportRect().Size.X + 250);
+		else newPosition = Position + Vector2.Right * (GetViewportRect().Size.X + 250);
 
 		Tween tween = CreateTween();
 		tween.TweenProperty(this, nameof(Position).ToLower(), newPosition, 0.1f);

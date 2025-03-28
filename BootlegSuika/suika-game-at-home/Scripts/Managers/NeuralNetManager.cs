@@ -34,7 +34,11 @@ public partial class NeuralNetManager : Node
             neat.NextTimestep();
             timeStepElapsed = 0;
         }
-        if (AllAgentsDead()) manager.NextIteration();
+        if (AllAgentsDead())
+        {
+            GD.Print("--- ALL AGENTS DEAD - MOVING TO NEXT GENERATION ---");
+            manager.NextIteration();
+        }
     }
 
     public void StartTraining()

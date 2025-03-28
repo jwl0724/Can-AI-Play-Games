@@ -28,7 +28,7 @@ public partial class TrainingManager : Node
     private int iterations = 0;
 
     // Constant variables
-    public int AgentWidth => (int) camera.GetViewportRect().Size.X;
+    public int AgentWidth => (int) camera.GetViewportRect().Size.X + 250; // Add some padding so fruit explosion doesn't fail neighbor agents
 
     public override void _Ready()
     {
@@ -60,7 +60,14 @@ public partial class TrainingManager : Node
             return;
         }
         iterations++;
-        if (newBest) timeLimit += rewardAmount; // Increase time limit if improvement was made
+        if (newBest)
+        {
+            // Set the new time limit and reset the timer
+            timeLimit += rewardAmount; // Increase time limit if improvement was made
+            timer.WaitTime = timeLimit;
+            timer.Stop();
+            timer.Start();
+        }
         elapsedTime = 0;
         neuralNet.StartNextLoop();
     }

@@ -17,9 +17,9 @@ public partial class GameLoop : Node2D
 
 	// Running variables
 	public Vector2 BoxBorders { get; protected set; } = new Vector2(265, 795);
-	public bool Paused { get; private set; } = false;
+	public bool Paused { get; protected set; } = false;
 	public bool Playing { get; protected set; } = false;
-	public int Score { get; private set; } = 0;
+	public int Score { get; protected set; } = 0;
 	public FruitType NextFruit { get; private set; }
 	public Fruit CurrentFruit { get; private set; } = null;
 
