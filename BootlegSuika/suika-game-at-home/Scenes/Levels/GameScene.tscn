@@ -40,6 +40,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_idvl6")
+metadata/_edit_use_anchors_ = true
 
 [node name="BoxVisuals" parent="Visuals" instance=ExtResource("4_lf6a0")]
 anchors_preset = 8
@@ -53,6 +54,7 @@ offset_right = -56.0
 offset_bottom = 51.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="UI" type="Control" parent="Visuals"]
 z_index = -1
@@ -62,10 +64,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="GameOverMenu" parent="Visuals/UI" instance=ExtResource("5_qv83r")]
 z_index = 1
 layout_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("6_72fy6")]
 layout_mode = 1
@@ -81,6 +85,7 @@ offset_bottom = -173.0
 grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.7, 0.7)
+metadata/_edit_use_anchors_ = true
 
 [node name="NextFruit" parent="Visuals/UI" instance=ExtResource("7_pobff")]
 layout_mode = 1
@@ -94,6 +99,7 @@ offset_bottom = 150.0
 grow_horizontal = 0
 grow_vertical = 1
 scale = Vector2(0.7, 0.7)
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreBubble" parent="Visuals/UI" instance=ExtResource("8_mo8gx")]
 layout_mode = 1
@@ -107,6 +113,7 @@ offset_bottom = 125.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.7, 0.7)
+metadata/_edit_use_anchors_ = true
 
 [node name="Managers" type="Node" parent="."]
 

@@ -1,3 +1,173 @@
-[gd_scene format=3 uid="uid://b8a2fu45iw5hn"]
+[gd_scene load_steps=18 format=3 uid="uid://b8a2fu45iw5hn"]
 
-[node name="ReplayScene" type="Node2D"]
+[ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="1_5m45r"]
+[ext_resource type="Script" path="res://Scripts/Entities/Replayer.cs" id="1_a6k1c"]
+[ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="2_c1xe7"]
+[ext_resource type="PackedScene" uid="uid://xx7htrj18hf4" path="res://Scenes/UI/Static/BoxVisuals.tscn" id="3_gco08"]
+[ext_resource type="PackedScene" uid="uid://clch51u5vbqop" path="res://Scenes/UI/Dynamic/GameOverMenu.tscn" id="4_6fbd8"]
+[ext_resource type="PackedScene" uid="uid://c5fesbbfw3e43" path="res://Scenes/UI/Static/FruitOrder.tscn" id="5_nlcyf"]
+[ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="6_xwqyd"]
+[ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="7_uiswd"]
+[ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="8_yavxv"]
+[ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="9_6a1dp"]
+[ext_resource type="PackedScene" uid="uid://c6gajoa5flv26" path="res://Scenes/Managers/SFXManager.tscn" id="10_n25v8"]
+[ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="11_43md2"]
+[ext_resource type="Script" path="res://Scripts/Managers/LosePlaneManager.cs" id="12_xfird"]
+[ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="13_cqni0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bbik"]
+size = Vector2(60, 500)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1brw5"]
+size = Vector2(550, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cv6or"]
+size = Vector2(400, 500)
+
+[node name="ReplayScene" type="Node2D" node_paths=PackedStringArray("ray")]
+script = ExtResource("1_a6k1c")
+ray = NodePath("Player/FruitPosition/DropLine/Raycast")
+
+[node name="Box" type="Node" parent="."]
+script = ExtResource("1_5m45r")
+
+[node name="Visuals" type="Node" parent="."]
+
+[node name="Background" type="TextureRect" parent="Visuals"]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_c1xe7")
+metadata/_edit_use_anchors_ = true
+
+[node name="BoxVisuals" parent="Visuals" instance=ExtResource("3_gco08")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 51.0
+offset_right = -56.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="UI" type="Control" parent="Visuals"]
+z_index = -1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="GameOverMenu" parent="Visuals/UI" instance=ExtResource("4_6fbd8")]
+z_index = 1
+layout_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="FruitOrder" parent="Visuals/UI" instance=ExtResource("5_nlcyf")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -177.0
+offset_top = -173.0
+offset_right = -177.0
+offset_bottom = -173.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+metadata/_edit_use_anchors_ = true
+
+[node name="NextFruit" parent="Visuals/UI" instance=ExtResource("6_xwqyd")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -177.0
+offset_top = 150.0
+offset_right = -177.0
+offset_bottom = 150.0
+grow_horizontal = 0
+grow_vertical = 1
+scale = Vector2(0.7, 0.7)
+metadata/_edit_use_anchors_ = true
+
+[node name="ScoreBubble" parent="Visuals/UI" instance=ExtResource("7_uiswd")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 125.0
+offset_top = 125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.7, 0.7)
+metadata/_edit_use_anchors_ = true
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="FruitBuilder" type="Node" parent="Managers"]
+script = ExtResource("8_yavxv")
+fruitScene = ExtResource("9_6a1dp")
+
+[node name="SFXManager" parent="Managers" instance=ExtResource("10_n25v8")]
+
+[node name="Player" parent="." instance=ExtResource("11_43md2")]
+z_index = 1
+position = Vector2(540, 56)
+
+[node name="BoxBoundaries" type="Node2D" parent="."]
+
+[node name="Left" type="StaticBody2D" parent="BoxBoundaries"]
+position = Vector2(257, 373)
+
+[node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Left"]
+position = Vector2(-22, 0)
+shape = SubResource("RectangleShape2D_6bbik")
+
+[node name="Right" type="StaticBody2D" parent="BoxBoundaries"]
+position = Vector2(807, 373)
+
+[node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Right"]
+position = Vector2(18, 0)
+shape = SubResource("RectangleShape2D_6bbik")
+
+[node name="Ground" type="StaticBody2D" parent="BoxBoundaries"]
+position = Vector2(531, 615)
+
+[node name="Body" type="CollisionShape2D" parent="BoxBoundaries/Ground"]
+position = Vector2(-2, 19)
+shape = SubResource("RectangleShape2D_1brw5")
+
+[node name="LosePlane" type="Node2D" parent="."]
+script = ExtResource("12_xfird")
+
+[node name="Left" type="Area2D" parent="LosePlane"]
+position = Vector2(45, 398)
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="LosePlane/Left"]
+shape = SubResource("RectangleShape2D_cv6or")
+
+[node name="Right" type="Area2D" parent="LosePlane"]
+position = Vector2(1016, 398)
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="LosePlane/Right"]
+shape = SubResource("RectangleShape2D_cv6or")
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_cqni0")
+autoplay = true
