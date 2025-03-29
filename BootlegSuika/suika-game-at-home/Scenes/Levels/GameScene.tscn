@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dvf60valdas0p"]
+[gd_scene load_steps=19 format=3 uid="uid://dvf60valdas0p"]
 
 [ext_resource type="Script" path="res://Scripts/GameLoop.cs" id="1_2dgol"]
 [ext_resource type="Script" path="res://Scripts/Entities/Box.cs" id="2_wxdlc"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://0sulm4mw1w5u" path="res://Scenes/UI/Dynamic/NextFruit.tscn" id="7_pobff"]
 [ext_resource type="PackedScene" uid="uid://dxuahuijf6ioh" path="res://Scenes/UI/Dynamic/ScoreBubble.tscn" id="8_mo8gx"]
 [ext_resource type="Script" path="res://Scripts/Builders/FruitBuilder.cs" id="9_3qa3x"]
+[ext_resource type="PackedScene" uid="uid://ba2ohji5c5qj0" path="res://Scenes/UI/Static/PauseMenu.tscn" id="9_hcwjh"]
 [ext_resource type="PackedScene" uid="uid://jii08pf5n34n" path="res://Scenes/Prefabs/Fruit.tscn" id="10_pjmk6"]
 [ext_resource type="PackedScene" uid="uid://c6gajoa5flv26" path="res://Scenes/Managers/SFXManager.tscn" id="11_warx2"]
 [ext_resource type="PackedScene" uid="uid://c7hdyyypm45dr" path="res://Scenes/Prefabs/Player.tscn" id="12_0bps8"]
@@ -103,9 +104,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ScoreBubble" parent="Visuals/UI" instance=ExtResource("8_mo8gx")]
 layout_mode = 1
-anchors_preset = 0
+anchors_preset = -1
+anchor_top = 0.0555555
 anchor_right = 0.0
-anchor_bottom = 0.0
+anchor_bottom = 0.0555555
 offset_left = 125.0
 offset_top = 125.0
 offset_right = 125.0
@@ -114,6 +116,10 @@ grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.7, 0.7)
 metadata/_edit_use_anchors_ = true
+
+[node name="PauseMenu" parent="Visuals/UI" instance=ExtResource("9_hcwjh")]
+z_index = 1
+layout_mode = 1
 
 [node name="Managers" type="Node" parent="."]
 
@@ -168,5 +174,6 @@ monitorable = false
 shape = SubResource("RectangleShape2D_vx74o")
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("14_2ia7l")
 autoplay = true
