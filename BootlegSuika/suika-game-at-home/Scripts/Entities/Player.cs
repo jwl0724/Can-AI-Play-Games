@@ -18,6 +18,7 @@ public partial class Player : Node2D
 
     // Signals
     [Signal] public delegate void DropFruitEventHandler();
+    [Signal] public delegate void PausePressedEventHandler();
 
     // Running variables
     public Fruit HeldFruit { get; private set; } = null;

@@ -25,5 +25,6 @@ public partial class InputManager : Node
 		player.Move(moveDirection, delta);
 
 		if (Input.IsActionJustPressed("Drop")) player.DropHeldFruit();
+		if (Input.IsActionJustPressed("Pause")) player.EmitSignal(Player.SignalName.PausePressed);
 	}
 }
