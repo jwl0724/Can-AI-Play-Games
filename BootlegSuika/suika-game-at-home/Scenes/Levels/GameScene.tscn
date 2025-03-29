@@ -27,8 +27,6 @@ size = Vector2(400, 500)
 [node name="Level" type="Node2D"]
 script = ExtResource("1_2dgol")
 
-[node name="Canvas" type="CanvasLayer" parent="."]
-
 [node name="Box" type="Node" parent="."]
 script = ExtResource("2_wxdlc")
 
