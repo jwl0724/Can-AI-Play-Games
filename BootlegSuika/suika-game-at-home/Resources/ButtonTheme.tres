@@ -1,0 +1,30 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://cm62f84ba437k"]
+
+[ext_resource type="FontFile" uid="uid://cfbdsqhrnmdli" path="res://Assets/Fonts/Bubbly Dream.ttf" id="1_p05y1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yhtse"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6qd25"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ukac"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jn74g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qxfbo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_trrhe"]
+
+[resource]
+Button/colors/font_color = Color(0.984314, 0.988235, 0.972549, 1)
+Button/colors/font_hover_color = Color(0.646027, 0.64603, 0.64603, 1)
+Button/colors/font_outline_color = Color(0.517647, 0.384314, 0.145098, 1)
+Button/colors/font_pressed_color = Color(0.513233, 0.513233, 0.513233, 1)
+Button/constants/outline_size = 20
+Button/font_sizes/font_size = 64
+Button/fonts/font = ExtResource("1_p05y1")
+Button/styles/disabled = SubResource("StyleBoxEmpty_yhtse")
+Button/styles/disabled_mirrored = SubResource("StyleBoxEmpty_6qd25")
+Button/styles/focus = SubResource("StyleBoxEmpty_8ukac")
+Button/styles/hover = SubResource("StyleBoxEmpty_jn74g")
+Button/styles/normal = SubResource("StyleBoxEmpty_qxfbo")
+Button/styles/pressed = SubResource("StyleBoxEmpty_trrhe")
