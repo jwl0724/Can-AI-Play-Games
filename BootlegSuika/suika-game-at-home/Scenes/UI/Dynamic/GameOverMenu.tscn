@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://clch51u5vbqop"]
+[gd_scene load_steps=8 format=3 uid="uid://clch51u5vbqop"]
 
 [ext_resource type="Script" path="res://Scripts/UI/GameOverUI.cs" id="1_gyxdr"]
 [ext_resource type="FontFile" uid="uid://cfbdsqhrnmdli" path="res://Assets/Fonts/Bubbly Dream.ttf" id="2_ka3yy"]
+[ext_resource type="Theme" uid="uid://cm62f84ba437k" path="res://Resources/ButtonTheme.tres" id="3_syxae"]
 
 [sub_resource type="Gradient" id="Gradient_8xb57"]
 offsets = PackedFloat32Array(0.0194805, 1)
@@ -30,33 +31,6 @@ outline_color = Color(0.517647, 0.384314, 0.145098, 1)
 shadow_size = 16
 shadow_color = Color(0.776471, 0.67451, 0.396078, 0)
 shadow_offset = Vector2(10, 10)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yhtse"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6qd25"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ukac"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jn74g"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qxfbo"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_trrhe"]
-
-[sub_resource type="Theme" id="Theme_yhf7e"]
-Button/colors/font_color = Color(0.984314, 0.988235, 0.972549, 1)
-Button/colors/font_hover_color = Color(0.646027, 0.64603, 0.64603, 1)
-Button/colors/font_outline_color = Color(0.517647, 0.384314, 0.145098, 1)
-Button/colors/font_pressed_color = Color(0.513233, 0.513233, 0.513233, 1)
-Button/constants/outline_size = 20
-Button/font_sizes/font_size = 64
-Button/fonts/font = ExtResource("2_ka3yy")
-Button/styles/disabled = SubResource("StyleBoxEmpty_yhtse")
-Button/styles/disabled_mirrored = SubResource("StyleBoxEmpty_6qd25")
-Button/styles/focus = SubResource("StyleBoxEmpty_8ukac")
-Button/styles/hover = SubResource("StyleBoxEmpty_jn74g")
-Button/styles/normal = SubResource("StyleBoxEmpty_qxfbo")
-Button/styles/pressed = SubResource("StyleBoxEmpty_trrhe")
 
 [node name="GameOverMenu" type="Control"]
 layout_mode = 3
@@ -126,9 +100,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -73.5
-offset_top = -74.0
+offset_top = -104.0
 offset_right = 73.5
-offset_bottom = -4.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Score"
@@ -142,9 +116,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -73.5
-offset_top = 1.0
+offset_top = -29.0
 offset_right = 73.5
-offset_bottom = 71.0
+offset_bottom = 41.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "14235"
@@ -159,10 +133,26 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -77.0
-offset_top = 116.0
+offset_top = 76.0
 offset_right = 77.0
-offset_bottom = 186.0
+offset_bottom = 146.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_yhf7e")
+theme = ExtResource("3_syxae")
 text = "AGAIN"
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.5
+offset_top = 156.0
+offset_right = 174.5
+offset_bottom = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_syxae")
+text = "BACK TO MENU"

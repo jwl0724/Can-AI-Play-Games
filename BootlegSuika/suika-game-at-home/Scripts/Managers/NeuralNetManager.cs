@@ -4,7 +4,7 @@ using System;
 public partial class NeuralNetManager : Node
 {
     // Constants
-    private readonly float timeStepInterval = 0.25f;
+    public static readonly float TimeStepInterval = 0.25f;
 
     // Components
     [Export] private Node gameScenes; // Node where agents are placed
@@ -28,7 +28,7 @@ public partial class NeuralNetManager : Node
         if (!IsTraining) return;
 
         timeStepElapsed += (float) delta;
-        if (timeStepElapsed > timeStepInterval)
+        if (timeStepElapsed > TimeStepInterval)
         {
             // NextTimeStep is the main loop that controls AI action
             neat.NextTimestep();

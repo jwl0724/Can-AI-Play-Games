@@ -1,0 +1,244 @@
+[gd_scene load_steps=20 format=3 uid="uid://c4rgfi2vr2bck"]
+
+[ext_resource type="Script" path="res://Scripts/UI/MainMenuUI.cs" id="1_bf5cu"]
+[ext_resource type="AudioStream" uid="uid://sotwsevxjjm5" path="res://Assets/Music/SuikaBGM.mp3" id="2_ljkt6"]
+[ext_resource type="Texture2D" uid="uid://c44irb6tn0fse" path="res://Assets/Sprites/Player.png" id="3_uyo54"]
+[ext_resource type="Script" path="res://Scripts/UI/Helpers/FloatEffect.cs" id="4_p5i4o"]
+[ext_resource type="Texture2D" uid="uid://brmjrw6mb2ak7" path="res://Assets/Sprites/Watermelon.png" id="5_nmicv"]
+[ext_resource type="Texture2D" uid="uid://ciu1mrl175ghg" path="res://Assets/Sprites/Apple.png" id="6_o2uvm"]
+[ext_resource type="Texture2D" uid="uid://bkrmtfd2vh8cd" path="res://Assets/Sprites/Orange.png" id="7_328yy"]
+[ext_resource type="Texture2D" uid="uid://bqsi5p3v3mcqy" path="res://Assets/Sprites/Peach.png" id="8_r7kbp"]
+[ext_resource type="Texture2D" uid="uid://d3l0kxp81sivu" path="res://Assets/Sprites/Melon.png" id="9_enxpc"]
+[ext_resource type="Texture2D" uid="uid://mbuacan350ui" path="res://Assets/Sprites/Pineapple.png" id="10_cc1d0"]
+[ext_resource type="Texture2D" uid="uid://dv8qu7lq7wrn" path="res://Assets/Sprites/Dekopon.png" id="11_akbbb"]
+[ext_resource type="Texture2D" uid="uid://bo13c8n7we20a" path="res://Assets/Sprites/Pear.png" id="12_ym5p6"]
+[ext_resource type="Texture2D" uid="uid://dfhc8yv7kfjw6" path="res://Assets/Sprites/Strawberry.png" id="13_ltk7m"]
+[ext_resource type="Texture2D" uid="uid://b8sali6qpoipd" path="res://Assets/Sprites/Grape.png" id="14_umsv8"]
+[ext_resource type="Texture2D" uid="uid://bermajcu0l0hj" path="res://Assets/Sprites/Cherry.png" id="15_p2xwg"]
+[ext_resource type="FontFile" uid="uid://cfbdsqhrnmdli" path="res://Assets/Fonts/Bubbly Dream.ttf" id="16_t740u"]
+[ext_resource type="Theme" uid="uid://cm62f84ba437k" path="res://Resources/ButtonTheme.tres" id="17_vawiw"]
+[ext_resource type="Texture2D" uid="uid://jvry44apg3xm" path="res://Assets/Images/Background.png" id="18_o02cf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jycmp"]
+font = ExtResource("16_t740u")
+font_size = 96
+font_color = Color(0.984314, 0.988235, 0.972549, 1)
+outline_size = 12
+outline_color = Color(0.517647, 0.384314, 0.145098, 1)
+shadow_size = 20
+shadow_color = Color(0.348047, 0.0501753, 0.0308704, 0.827451)
+shadow_offset = Vector2(2, 2)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bf5cu")
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -31.0
+offset_right = 55.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("17_vawiw")
+text = "PLAY"
+
+[node name="Watch" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.5
+offset_top = 69.0
+offset_right = 81.5
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("17_vawiw")
+text = "WATCH"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = 169.0
+offset_right = 52.0
+offset_bottom = 231.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("17_vawiw")
+text = "QUIT"
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_ljkt6")
+autoplay = true
+
+[node name="Decor" type="Control" parent="."]
+anchors_preset = 0
+metadata/_edit_lock_ = true
+
+[node name="Player" type="TextureRect" parent="Decor"]
+offset_left = 70.0
+offset_top = 48.0
+offset_right = 337.0
+offset_bottom = 221.0
+texture = ExtResource("3_uyo54")
+metadata/_edit_lock_ = true
+
+[node name="Hover" type="Node" parent="Decor/Player"]
+script = ExtResource("4_p5i4o")
+offsetAmount = 10.0
+speed = 0.8
+
+[node name="Watermelon" type="TextureRect" parent="Decor"]
+layout_mode = 0
+offset_left = 844.0
+offset_top = 192.0
+offset_right = 1119.0
+offset_bottom = 471.0
+rotation = 0.259046
+texture = ExtResource("5_nmicv")
+metadata/_edit_lock_ = true
+
+[node name="Apple" type="TextureRect" parent="Decor"]
+offset_left = 722.0
+offset_top = 427.0
+offset_right = 882.0
+offset_bottom = 589.0
+rotation = -0.376558
+texture = ExtResource("6_o2uvm")
+metadata/_edit_lock_ = true
+
+[node name="Orange" type="TextureRect" parent="Decor"]
+offset_left = 880.0
+offset_top = 436.0
+offset_right = 996.0
+offset_bottom = 561.0
+rotation = 0.189842
+texture = ExtResource("7_328yy")
+metadata/_edit_lock_ = true
+
+[node name="Peach" type="TextureRect" parent="Decor"]
+offset_left = 972.0
+offset_top = 365.0
+offset_right = 1165.0
+offset_bottom = 561.0
+rotation = 0.183495
+texture = ExtResource("8_r7kbp")
+metadata/_edit_lock_ = true
+
+[node name="Melon" type="TextureRect" parent="Decor"]
+offset_left = 38.0
+offset_top = 323.0
+offset_right = 262.0
+offset_bottom = 551.0
+rotation = -0.201954
+texture = ExtResource("9_enxpc")
+metadata/_edit_lock_ = true
+
+[node name="Pineapple" type="TextureRect" parent="Decor"]
+offset_left = 233.0
+offset_top = 336.0
+offset_right = 407.0
+offset_bottom = 535.0
+rotation = 0.277841
+texture = ExtResource("10_cc1d0")
+metadata/_edit_lock_ = true
+
+[node name="Dekopon" type="TextureRect" parent="Decor"]
+offset_left = 75.0
+offset_top = 438.0
+offset_right = 186.0
+offset_bottom = 558.0
+rotation = 0.651968
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("11_akbbb")
+metadata/_edit_lock_ = true
+
+[node name="Pear" type="TextureRect" parent="Decor"]
+offset_left = 114.0
+offset_top = 418.0
+offset_right = 269.0
+offset_bottom = 576.0
+rotation = 0.187178
+texture = ExtResource("12_ym5p6")
+metadata/_edit_lock_ = true
+
+[node name="Strawberry" type="TextureRect" parent="Decor"]
+offset_left = 259.0
+offset_top = 525.0
+offset_right = 379.0
+offset_bottom = 656.0
+rotation = -0.4727
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("13_ltk7m")
+metadata/_edit_lock_ = true
+
+[node name="Grape" type="TextureRect" parent="Decor"]
+offset_left = 207.0
+offset_top = 527.0
+offset_right = 329.0
+offset_bottom = 655.0
+rotation = -0.201954
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("14_umsv8")
+metadata/_edit_lock_ = true
+
+[node name="Cherry" type="TextureRect" parent="Decor"]
+offset_left = 952.0
+offset_top = 504.0
+offset_right = 1055.0
+offset_bottom = 632.0
+rotation = 0.0920073
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_p2xwg")
+metadata/_edit_lock_ = true
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -157.5
+offset_top = 50.0
+offset_right = 157.5
+offset_bottom = 239.0
+grow_horizontal = 2
+text = "SUIKA AT
+HOME"
+label_settings = SubResource("LabelSettings_jycmp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hover" type="Node" parent="Title"]
+script = ExtResource("4_p5i4o")
+offsetAmount = 30.0
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("18_o02cf")
+metadata/_edit_lock_ = true

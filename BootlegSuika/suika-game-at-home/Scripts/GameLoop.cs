@@ -7,13 +7,13 @@ public partial class GameLoop : Node2D
 	public Player Player { get; private set; }
 	public Box FruitContainer { get; private set; }
 	public FruitBuilder Builder { get; private set; }
+	private PauseMenuUI pauseMenu;
 
 	// Events
 	[Signal] public delegate void ScoreChangeEventHandler(int score);
 	[Signal] public delegate void NextFruitPickedEventHandler(int fruitType); // Expected to typecast back to FruitType
 	[Signal] public delegate void GameOverEventHandler(int score);
 	[Signal] public delegate void GameStartEventHandler();
-	[Signal] public delegate void PauseStateChangeEventHandler(bool paused);
 
 	// Running variables
 	public Vector2 BoxBorders { get; protected set; } = new Vector2(265, 795);
@@ -28,6 +28,10 @@ public partial class GameLoop : Node2D
 		FruitContainer = GetNode<Box>("Box");
 		Builder = GetNode<FruitBuilder>("Managers/FruitBuilder");
 		Player = GetNode<Player>("Player");
+		pauseMenu = GetNodeOrNull<PauseMenuUI>("Visuals/UI/PauseMenu");
+
+		Player.Connect(Player.SignalName.PausePressed, new Callable(this, nameof(OnPause)));
+
 		StartGame();
 	}
 
@@ -39,12 +43,6 @@ public partial class GameLoop : Node2D
 	{
 		Score += score;
 		EmitSignal(SignalName.ScoreChange, Score);
-	}
-
-	public void PauseGame(bool pause)
-	{
-		Paused = pause;
-		EmitSignal(SignalName.PauseStateChange, pause);
 	}
 
 	// Spawn the fruit into player's hand
@@ -85,6 +83,11 @@ public partial class GameLoop : Node2D
 		CallDeferred(nameof(StartGame));
 	}
 
+	public void ResumeGame()
+	{
+		ProcessMode = ProcessModeEnum.Inherit;
+	}
+
 	private void StartGame()
 	{
 		Playing = true;
@@ -93,5 +96,12 @@ public partial class GameLoop : Node2D
 		ChooseNextFruit();
 		SpawnFruit();
 		EmitSignal(SignalName.GameStart);
+	}
+
+	private void OnPause()
+	{
+		if (!Playing) return;
+		pauseMenu.ShowMenu();
+		ProcessMode = ProcessModeEnum.Disabled;
 	}
 }
