@@ -6,7 +6,7 @@ public partial class FloatEffect : Node
     [Export] private float speed = 1;
     private Control parent;
     private float baseline;
-    private float theta = GD.Randf() * Mathf.Pi; // Offsets from other float effects
+    private float theta = GD.Randf() * Mathf.Pi * 2; // Offsets from other float effects
 
     public override void _Ready()
     {
@@ -17,6 +17,6 @@ public partial class FloatEffect : Node
     public override void _Process(double delta)
     {
         parent.Position = new Vector2(parent.Position.X, baseline + offsetAmount * Mathf.Sin(theta));
-        theta = theta >= Mathf.Pi ? 0 : theta + (float) delta * speed;
+        theta = theta >= 2 * Mathf.Pi ? 0 : theta + (float) delta * speed;
     }
 }

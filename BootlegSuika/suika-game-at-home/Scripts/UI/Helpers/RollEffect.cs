@@ -7,7 +7,7 @@ public partial class RollEffect : Node
     [Export] private float speed = 1;
     private Control parent;
     private float originalRotation;
-    private float theta = GD.Randf() * Mathf.Pi;
+    private float theta = GD.Randf() * Mathf.Pi * 2;
 
     public override void _Ready()
     {
