@@ -6,7 +6,7 @@ public partial class Agent : GameLoop
 {
     // Components for library
     public static readonly string Path = "res://Scenes/Prefabs/Agent.tscn";
-    public static readonly short NeuralNetInputCount = 13; // 13
+    public static readonly short NeuralNetInputCount = 6; // 13
     public static readonly short NeuralNetOutputCount = 2;
     [Signal] public delegate void deathEventHandler(); // Required signal for neural net (has to be lowercase)
     [Export] private RayCast2D ray; // Taken from dropper preview UI raycast
